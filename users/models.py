@@ -7,3 +7,5 @@ class User(AbstractUser):
     is_verified_email = models.BooleanField(default=False)
     rating = models.IntegerField(default=0)
 
+
+
