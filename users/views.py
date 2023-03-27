@@ -19,6 +19,7 @@ class UserLoginView(SuccessMessageMixin, LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
     success_url = reverse_lazy('index')
+    success_message = 'Вы успешно зарегистрировались!'
 
 
 
