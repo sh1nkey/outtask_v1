@@ -1,12 +1,9 @@
 from django.contrib import admin
-from market.models import Uni, Subject, Offer, Order
+from market.models import  Subject, Offer, Order
 
 
 # Register your models here.
 
-@admin.register(Uni)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['uni_name']
 
 @admin.register(Subject)
 class UserAdmin(admin.ModelAdmin):
