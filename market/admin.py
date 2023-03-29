@@ -1,16 +1,17 @@
 from django.contrib import admin
-from market.models import ModelSubject, ModelUni, ModelOfferOrder
+from market.models import Uni, Subject, Offer
+
 
 # Register your models here.
 
-@admin.register(ModelUni)
+@admin.register(Uni)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['uni_name']
 
-@admin.register(ModelSubject)
+@admin.register(Subject)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['subj_name']
 
-@admin.register(ModelOfferOrder)
+@admin.register(Offer)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['task']
