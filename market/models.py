@@ -15,7 +15,7 @@ class Offer(models.Model):
     user= models.ForeignKey(to=User, on_delete=models.CASCADE)
     task = models.CharField(max_length=40)
     price = models.PositiveIntegerField(default=0)
-    offer_or_order = models.BooleanField()
+
 
     def __str__(self):
         return f'{self.user.username}'
