@@ -11,8 +11,8 @@ class Subject(models.Model):
         return f'{self.subj_name}'
 
 class Offer(models.Model):
-    subj = models.ForeignKey(to=Subject, on_delete=models.CASCADE)
-    user= models.ForeignKey(to=User, on_delete=models.CASCADE)
+    subj = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    user= models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.CharField(max_length=40)
     price = models.PositiveIntegerField(default=0)
 

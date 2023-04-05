@@ -13,7 +13,7 @@ class Uni(models.Model):
 
 class User(AbstractUser):
     is_verified_email = models.BooleanField(default=False)
-    uni = models.ForeignKey(to=Uni, on_delete=models.CASCADE, null=True)
+    uni = models.ForeignKey(Uni, on_delete=models.CASCADE, null=True)
     rating = models.IntegerField(default=0)
 
 
