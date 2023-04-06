@@ -5,6 +5,14 @@
     <title>Chat Room</title>
 </head>
 <body>
+    {% block content %}
+    <h2>Chats</h2>
+    <ul>
+        {% for one in object_list %}
+            <li>{{ one.room}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
 
 </body>
 </html>
