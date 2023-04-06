@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<body>
+    {% block content %}
+    <h2>Открытые предложения</h2>
+    <table border="1">
+        <tr>
+          <th>Предмет</th>
+          <th>Задание</th>
+          <th>Цена</th>
+        </tr>
+      {% for offer in object_list %}
+        <tr>
+          <td>{{ offer.subj}}</td>
+          <td>{{ offer.task}}</td>
+          <td>{{ offer.price}}</td>
+        </tr>
+      {% endfor %}
+    {% endblock%}
+
+
+    </table>
+
+
+</body>
+</html>
+

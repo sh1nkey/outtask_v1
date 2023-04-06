@@ -1,10 +1,11 @@
 from django.urls import path
 
 from . import views
-from .views import CheckView
+from .views import ChatListView, message_save
 
 urlpatterns = [
     path("", views.index, name = 'index'),
     path("<str:room_name>/", views.room, name="room"),
-    path("checkview", CheckView.as_view(), name="checkview"),
+    path("chatlistview", ChatListView.as_view(), name="chatlistview"),
+    path('<uuid:room_id>/messages/save/', message_save, name='save_message'),
 ]

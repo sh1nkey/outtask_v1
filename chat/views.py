@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.views.generic import ListView
@@ -26,7 +26,7 @@ def checkview(request):
         print("Not logged in")
 
 
-class CheckView(ListView):
+class ChatListView(ListView):
     model = Messages
     template_name = 'chat/test_show.html'
     title = 'test'
@@ -39,11 +39,12 @@ class CheckView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
-    #
-    # def get_queryset(self):
-    #     if request.user.is_authenticated:
-    #         room_queryset = Messages.objects.filter(user__username=request.user).values('room').distinct()
-    #         rq = [one['room'] for one in room_queryset]
-    #         return render(request, "chat/test_show.html")
-    #     else:
-    #         print("Not logged in")
+
+
+def message_save(request, room_id):
+    if request.method == 'POST':
+        message_value = request.POST['message']
+        room = Room.object.get(pk=room_id)
+        message = Messages(value=message_value, user=request.user, room=room)
+        message.save()
+        return redirect('room_detail', room_id=room_id)
