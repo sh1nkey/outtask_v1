@@ -15,12 +15,18 @@
           <div class="header_logo">
             <a href="#"><img src="{% static 'market/img/logo-new.png' %}" alt="Logo" /> </a>
           </div>
+          {% if not user.is_authenticated%}
+            <div class="header_nav">
+                <a href="{% url 'account_login' %}" class="nav_item"> Вход </a>
+            </div>
           <div class="header_nav">
-            <a href="#" class="nav_item"> Вход </a>
+            <a href="{% url 'account_signup' %}" class="nav_item"> Регистрация </a>
           </div>
+          {% else %}
           <div class="header_nav">
-            <a href="#" class="nav_item"> Регистрация </a>
+            <a href="{% url 'account_logout' %}" class="nav_item"> Выйти </a>
           </div>
+          {% endif %}
         </div>
       </div>
     </header>
