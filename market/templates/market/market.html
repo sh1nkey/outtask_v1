@@ -6,6 +6,11 @@
 </head>
 <body>
     {% block content %}
+    <select>
+        {% for option in unis %}
+        <option>{{option.uni_name}}</option>
+        {% endfor %}
+    </select>
     <h2>Открытые предложения</h2>
     <table border="1">
         <tr>
@@ -13,7 +18,7 @@
           <th>Задание</th>
           <th>Цена</th>
         </tr>
-      {% for offer in object_list %}
+      {% for offer in offers %}
         <tr>
           <td>{{ offer.subj}}</td>
           <td>{{ offer.task}}</td>
@@ -21,11 +26,7 @@
         </tr>
       {% endfor %}
     {% endblock%}
-
-
     </table>
-
-
 </body>
 </html>
 
