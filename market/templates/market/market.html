@@ -6,11 +6,10 @@
 </head>
 <body>
     {% block content %}
-    <select>
-        {% for option in unis %}
-        <option>{{option.uni_name}}</option>
-        {% endfor %}
-    </select>
+   <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Фильтровать</button>
+    </form>
     <h2>Открытые предложения</h2>
     <table border="1">
         <tr>
