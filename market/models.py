@@ -17,7 +17,8 @@ class Offer(models.Model):
     price = models.PositiveIntegerField(default=0)
     deadline = models.DateField(blank=True, null=True)
 
-
+    class Meta:
+        ordering = ['deadline']
 
     def __str__(self):
         return f'{self.user.username}'

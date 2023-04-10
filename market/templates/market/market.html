@@ -1,23 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <title>Chat Room</title>
-</head>
-<body>
-    {% block content %}
+{% extends 'market/base.html' %}
+
+
+{% block content %}
    <form method="get">
         {{ form.as_p }}
-        <button type="submit">Фильтровать</button>
+       <button type="submit" style="border: 1px solid black;">Фильтровать</button>
     </form>
+    <div style="height: 10px; width: 20px;"></div>
     <a href="{% url 'createoffer' %}">Создать заказ</a>
-    <h2>Открытые предложения</h2>
+    <div style="height: 10px; width: 20px;"></div>
+    <h1>Открытые предложения</h1>
     <table border="1">
         <tr>
           <th>Предмет</th>
           <th>Задание</th>
           <th>Цена</th>
-            <th>Крайний срок</th>
+          <th>Крайний срок</th>
         </tr>
       {% for offer in offers %}
         <tr>
@@ -27,8 +25,7 @@
             <td>{{ offer.deadline }}</td>
         </tr>
       {% endfor %}
-    {% endblock%}
     </table>
-</body>
-</html>
+{% endblock%}
+
 

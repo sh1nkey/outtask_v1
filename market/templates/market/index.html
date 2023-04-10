@@ -1,57 +1,24 @@
-<!DOCTYPE html>
+{% extends 'market/base.html' %}
 {% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link rel="stylesheet" href="{% static 'market/css/style.css' %}" />
-    <title>OutTask</title>
-  </head>
-  <body>
-    <!-- ========== Header start ========== -->
-    <header class="header">
-      <div class="header_content">
-        <div class="container">
-          <div class="header_logo">
-            <a href="#"><img src="{% static 'market/img/logo-new.png' %}" alt="Logo" /> </a>
-          </div>
-           <div class="header_nav">
-                <a href="{% url 'marketlistview' %}" class="nav_item"> Заказы </a>
-            </div>
-          {% if not user.is_authenticated%}
-            <div class="header_nav">
-                <a href="{% url 'account_login' %}" class="nav_item"> Вход </a>
-            </div>
-          <div class="header_nav">
-            <a href="{% url 'account_signup' %}" class="nav_item"> Регистрация </a>
-          </div>
-          {% else %}
-          <div class="header_nav">
-            <a href="{% url 'account_logout' %}" class="nav_item"> Выйти </a>
-          </div>
-          {% endif %}
-        </div>
-      </div>
-    </header>
-    <!-- ========== Header end ========== -->
 
-    <!-- ========== Home start ========== -->
-    <section class="home">
-      <div class="container">
-        <div class="home_content">
-          <h1>Outtask есть - домашки нет</h1>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti
-            temporibus excepturi, illum a quas sapiente blanditiis dicta eaque
-            explicabo, maxime quia cupiditate, amet dolores. Fuga eius facilis
-            dolor earum incidunt!
-          </p>
-        </div>
-        <div class="home_img">
-          <img src="{% static 'market/img/students.jpg' %}" alt="students" />
-        </div>
+      <!-- ========== Home start ========== -->
+{% block content %}
+  <section class="home">
+    <div class="container">
+      <div class="home_content">
+        <h1>Outtask есть - домашки нет</h1>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti
+          temporibus excepturi, illum a quas sapiente blanditiis dicta eaque
+          explicabo, maxime quia cupiditate, amet dolores. Fuga eius facilis
+          dolor earum incidunt!
+        </p>
       </div>
-    </section>
+      <div class="home_img">
+        <img src="{% static 'market/img/students.jpg' %}" alt="students" />
+      </div>
+    </div>
+  </section>
+{% endblock%}
     <!-- ========== Home end ========== -->
-  </body>
-</html>
+

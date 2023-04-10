@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {% block content %}
-    <h2>Create an Offer</h2>
-  <form method="post">
+{% extends 'market/base.html' %}
+
+{% block content %}
+<h2>Create an Offer</h2>
+  <form method="post" style="background-color: #222; color: #fff;">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
   </form>
+{% endblock%}
 
-    {% endblock%}
-
-</body>
-</html>

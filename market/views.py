@@ -39,7 +39,6 @@ class OfferCreationView(FormView, SuccessMessageMixin):
 
 
     def form_valid(self, form):
-        print(self.request.GET.get('context'))
         subject, task, price, deadline =  form.cleaned_data['subject'], form.cleaned_data['task'], form.cleaned_data['price'], form.cleaned_data['deadline']
         new_offer = Offer(subj=subject, user=self.request.user, task=task, price=price, deadline=deadline)
         new_offer.save()
