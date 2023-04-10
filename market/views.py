@@ -1,16 +1,18 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import ListView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView, FormView
 
-from market.forms import UniForm
+from market.forms import UniForm, OfferCreation
 from market.models import Offer
 from users.models import Uni
 
 
 class MarketListView(ListView):
     template_name = 'market/market.html'
-    title = 'Маркет'
+    title = 'Заказы'
 
     def get_queryset(self):
         offers = Offer.objects.all()
@@ -27,4 +29,22 @@ class MarketListView(ListView):
 
 
 class IndexView(TemplateView):
-    template_name = 'market/index.html' #
+    template_name = 'market/index.html'
+
+class OfferCreationView(FormView, SuccessMessageMixin):
+    template_name = 'market/create_offer.html'
+    form_class = OfferCreation
+    success_message = 'Вы успешно создали заказ!'
+    success_url = reverse_lazy('marketlistview')
+
+
+    def form_valid(self, form):
+        print(self.request.GET.get('context'))
+        subject, task, price, deadline =  form.cleaned_data['subject'], form.cleaned_data['task'], form.cleaned_data['price'], form.cleaned_data['deadline']
+        new_offer = Offer(subj=subject, user=self.request.user, task=task, price=price, deadline=deadline)
+        new_offer.save()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        # Действия при неверной отправке формы
+        return super().form_invalid(form)

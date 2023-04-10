@@ -23,7 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('chat/', include('chat.urls')),
-    path("market/", MarketListView.as_view(), name="marketlistview")
+    path("market/", MarketListView.as_view(), name="marketlistview"),
+    path('market/', include('market.urls')),
+
 
 
     # path('market/', include('market.urls', namespace='market')), #это пока не нужно, функция не готова

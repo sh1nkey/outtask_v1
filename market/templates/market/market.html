@@ -10,18 +10,21 @@
         {{ form.as_p }}
         <button type="submit">Фильтровать</button>
     </form>
+    <a href="{% url 'createoffer' %}">Создать заказ</a>
     <h2>Открытые предложения</h2>
     <table border="1">
         <tr>
           <th>Предмет</th>
           <th>Задание</th>
           <th>Цена</th>
+            <th>Крайний срок</th>
         </tr>
       {% for offer in offers %}
         <tr>
-          <td>{{ offer.subj}}</td>
-          <td>{{ offer.task}}</td>
-          <td>{{ offer.price}}</td>
+          <td>{{ offer.subj }}</td>
+          <td>{{ offer.task }}</td>
+          <td>{{ offer.price }}</td>
+            <td>{{ offer.deadline }}</td>
         </tr>
       {% endfor %}
     {% endblock%}
