@@ -15,10 +15,7 @@ class MarketListView(ListView):
     def get_queryset(self):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
-        print(unis_check)
-        print(offers)
-        print(offers.filter(user__uni__pk=unis_check))
-        return offers.filter(user__uni__pk=unis_check) if unis_check else offers #допилить фильрацию по ВУЗу
+        return offers.filter(user__uni__pk=unis_check) if unis_check else offers
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
