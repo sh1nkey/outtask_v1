@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
+from django.utils.timezone import now
 from django.views.generic import ListView, TemplateView, FormView
 
 from market.forms import UniForm, OfferCreation
@@ -17,6 +18,7 @@ class MarketListView(ListView):
     def get_queryset(self):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
+        offers.filter(deadline__lt=now()).delete()
         return offers.filter(user__uni__pk=unis_check) if unis_check else offers
 
     def get_context_data(self, *, object_list=None, **kwargs):

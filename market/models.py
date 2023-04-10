@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-
+from django.utils.timezone import now
 # Create your models here.
 
 
@@ -22,6 +22,7 @@ class Offer(models.Model):
 
     def __str__(self):
         return f'{self.user.username}'
+
 
 
 # class Order(models.Model):
