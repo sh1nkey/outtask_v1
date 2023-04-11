@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>Create an Offer</h2>
-  <form method="post" style="background-color: #222; color: #fff;">
+  <form method="post" action="{% url 'profile' %}" style="background-color: #222; color: #fff;">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>

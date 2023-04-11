@@ -25,19 +25,19 @@ class Offer(models.Model):
 
 
 
-# class Order(models.Model):
-#     NOT_TAKEN = 0
-#     TAKEN = 1
-#     READY = 2
-#
-#     STATUSES = [
-#     (NOT_TAKEN, 'Исполнитель ещё не подтвердил, что  будет исполнять ваш заказ'),
-#     (TAKEN, 'Ваш заказ выполняется'),
-#     (READY, 'Заказ готов'),
-#     ]
-#
-#     offer = models.ForeignKey(to=Offer, on_delete=models.CASCADE)
-#     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-#     created_timestamp = models.DateTimeField(auto_now_add=True)
-#     status = models.SmallIntegerField(default=NOT_TAKEN, choices=STATUSES)
-#     deadline = models.DateField()
+class Order(models.Model):
+    NOT_TAKEN = 0
+    TAKEN = 1
+    READY = 2
+
+    STATUSES = [
+    (NOT_TAKEN, 'Исполнитель ещё не подтвердил, что  будет исполнять ваш заказ'),
+    (TAKEN, 'Ваш заказ выполняется'),
+    (READY, 'Заказ готов'),
+    ]
+
+    offer = models.ForeignKey(to=Offer, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.SmallIntegerField(default=NOT_TAKEN, choices=STATUSES)
+    deadline = models.DateField()
