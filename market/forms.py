@@ -8,6 +8,8 @@ from users.models import Uni, User
 class UniForm(forms.Form):
     uni_name = forms.ModelChoiceField(queryset=Uni.objects.all())
 
+
+
 class OfferCreation(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.all())
     task = forms.CharField(max_length=40)
@@ -16,7 +18,6 @@ class OfferCreation(forms.Form):
 
 class UserProfileForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
-
 
     class Meta:
         model = User

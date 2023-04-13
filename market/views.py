@@ -1,14 +1,13 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse_lazy
 from django.utils.timezone import now
-from django.views.generic import ListView, TemplateView, FormView, CreateView
+from django.views.generic import ListView, TemplateView, FormView
 
 from market.forms import UniForm, OfferCreation, UserProfileForm
 from market.models import Offer
-from users.models import Uni, User
+from users.models import Uni
 
 
 class MarketListView(ListView):
@@ -32,6 +31,7 @@ class MarketListView(ListView):
 
 class IndexView(TemplateView):
     template_name = 'market/index.html'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['username'] = self.request.user.username
@@ -43,7 +43,7 @@ class IndexView(TemplateView):
 class OfferCreationView(FormView):
     template_name = 'market/create_offer.html'
     form_class = OfferCreation
-    success_url = reverse_lazy('marketlistview')
+    success_url = reverse_lazy('markett')
 
     def form_valid(self, form):
         subject, task, price, deadline = form.cleaned_data['subject'], form.cleaned_data['task'], form.cleaned_data[

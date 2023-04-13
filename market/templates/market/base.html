@@ -15,7 +15,7 @@
             <a href="{% url 'index' %}"><img src="{% static 'market/img/logo-new.png' %}" alt="Logo" /> </a>
           </div>
            <div class="header_nav">
-                <a href="{% url 'marketlistview' %}" class="nav_item"> Заказы </a>
+                <a href="{% url 'markett' %}" class="nav_item"> Заказы </a>
             </div>
           {% if not user.is_authenticated%}
             <div class="header_nav">
@@ -26,10 +26,10 @@
           </div>
           {% else %}
           <div class="header_nav">
-            <a href="{% url 'account_logout' %}" class="nav_item"> Выйти </a>
-          </div>
-          <div class="header_nav">
             <a href="{% url 'profile' %}" class="nav_item"> Профиль </a>
+          </div>
+           <div class="header_nav">
+            <a href="{% url 'account_logout' %}" class="nav_item"> Выйти </a>
           </div>
           {% endif %}
         </div>
