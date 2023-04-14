@@ -70,6 +70,9 @@ class ProfileView(SuccessMessageMixin, FormView, FormMixin,):
         context['username'] = self.request.user.username
         context['uni_name'] = self.request.user.uni
         context['form1'] = UniForm
+        user = self.request.user
+        user_offers = Offer.objects.filter(user=user)
+        context['offers'] = user_offers
         return context
 
     def form_valid(self, form):

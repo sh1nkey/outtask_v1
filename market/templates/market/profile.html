@@ -33,5 +33,22 @@
          </div>
   </form>
 
+<h2>Ваши заказы: </h2></h2.>
+ <table border="1">
+        <tr>
+          <th>Предмет</th>
+          <th>Задание</th>
+          <th>Цена</th>
+          <th>Крайний срок</th>
+        </tr>
+      {% for offer in offers %}
+        <tr>
+          <td>{{ offer.subj }}</td>
+          <td>{{ offer.task }}</td>
+          <td>{{ offer.price }}</td>
+            <td>{{ offer.deadline }}</td>
+        </tr>
+      {% endfor %}
+    </table>
 
 {% endblock%}
