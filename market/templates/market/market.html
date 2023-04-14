@@ -1,5 +1,5 @@
 {% extends 'market/base.html' %}
-
+ХЪ
 
 {% block content %}
    <form method="get">
@@ -16,15 +16,18 @@
           <th>Задание</th>
           <th>Цена</th>
           <th>Крайний срок</th>
+          <th>Взять заказ</th>
         </tr>
+        {% load static %}
       {% for offer in offers %}
         <tr>
           <td>{{ offer.subj }}</td>
           <td>{{ offer.task }}</td>
           <td>{{ offer.price }}</td>
-            <td>{{ offer.deadline }}</td>
+          <td>{{ offer.deadline }}</td>
+         <td><a href="#"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></a></td>
         </tr>
-      {% endfor %}
+       {% endfor %}
     </table>
 {% endblock%}
 
