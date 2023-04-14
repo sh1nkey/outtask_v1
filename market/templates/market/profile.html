@@ -10,14 +10,25 @@
      </ul>
     {% endif %}
 
+
 <h1 style="background-color: #222; color: #fff;">Ваш email: {{ email }}</h1>
 <h1 style="background-color: #222; color: #fff;">Ваш username : {{ username }}</h1>
-
+<h1 style="background-color: #222; color: #fff;">Ваш ВУЗ : {{ uni_name }}</h1>
+<p class="tab">/</p>
 <form method="post" style="background-color: #222; color: #fff;">
         {% csrf_token %}
          <div class="col-lg-6">
              <label class="small mb-1" for="{{ form.username.id_for_label }}">Изменить имя пользователя на </label>
              {{ form.username }}
+             <button type="submit">Submit</button>
+         </div>
+  </form>
+
+<form method="post" style="background-color: #222; color: #fff;">
+        {% csrf_token %}
+         <div class="col-lg-6">
+             <label class="small mb-1" for="{{ form1.uni_name.id_for_label }}">Изменить ВУЗ на </label>
+             {{ form1.uni_name}}
              <button type="submit">Submit</button>
          </div>
   </form>

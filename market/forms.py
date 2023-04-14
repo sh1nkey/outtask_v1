@@ -8,6 +8,9 @@ from users.models import Uni, User
 class UniForm(forms.Form):
     uni_name = forms.ModelChoiceField(queryset=Uni.objects.all())
 
+    class Meta:
+        model = User
+        fields = ('uni_name',)
 
 
 class OfferCreation(forms.Form):
@@ -16,9 +19,13 @@ class OfferCreation(forms.Form):
     price = forms.IntegerField()
     deadline = forms.DateField()
 
-class UserProfileForm(UserChangeForm):
+
+class LoginChangeForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
 
     class Meta:
         model = User
         fields = ('username', )
+
+
+
