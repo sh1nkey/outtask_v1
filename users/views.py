@@ -1,16 +1,14 @@
 from django.contrib.messages.views import SuccessMessageMixin
-
-# Create your views here.
-
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView
 
+from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, FormView
 
 from market.forms import  UniForm
 from market.models import Offer
-from users.forms import LoginChangeForm, UniUpdateForm
 
+from users.forms import LoginChangeForm, UniUpdateForm
 from users.models import User
 
 
@@ -19,15 +17,11 @@ class Profile(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['login_update'] = LoginUpdate.as_view()(self.request, pk=self.request.user.pk)
         context['form'] =  LoginChangeForm
         context['username'] = self.request.user.username
-        context['vuz_update'] = VUZUpdate.as_view()
         context['form1'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
-        offers = UsersOffersListView.get_queryset(self)
-        context['offers'] = offers
-        print(context['offers'])
+        context['offers'] = UsersOffersListView.get_queryset(self)
         return context
 
 
@@ -37,6 +31,9 @@ class LoginUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'users/profile.html'
     success_message = 'Логин успешно изменен!'
     success_url = reverse_lazy('profile')
+
+    def form_invalid(self, form):
+        return HttpResponseRedirect(reverse_lazy('profile'))
 
 
 class VUZUpdate(SuccessMessageMixin, FormView):
@@ -51,9 +48,6 @@ class VUZUpdate(SuccessMessageMixin, FormView):
         user.uni = new_uni
         user.save()
         return super().form_valid(form)
-
-    def form_invalid(self, form):
-        return super().form_invalid(form)
 
 
 class UsersOffersListView(ListView):
