@@ -1,17 +1,17 @@
 from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
-from django.http import HttpResponseRedirect
+
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView
 
-from django.views.generic.edit import UpdateView, FormMixin, FormView
+from django.views.generic.edit import UpdateView, FormView
 
 from market.forms import  UniForm
 from market.models import Offer
 from users.forms import LoginChangeForm, UniUpdateForm
 
-from users.models import User, Uni
+from users.models import User
 
 
 class Profile(TemplateView):
@@ -28,7 +28,6 @@ class Profile(TemplateView):
         offers = UsersOffersListView.get_queryset(self)
         context['offers'] = offers
         print(context['offers'])
-        # context['offers'] = UsersOffersListView.get_queryset(self)
         return context
 
 
@@ -38,7 +37,6 @@ class LoginUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'users/profile.html'
     success_message = 'Логин успешно изменен!'
     success_url = reverse_lazy('profile')
-
 
 
 class VUZUpdate(SuccessMessageMixin, FormView):
@@ -66,8 +64,4 @@ class UsersOffersListView(ListView):
         offers = Offer.objects.filter(user=self.request.user)
         return  offers
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['offers'] = self.get_queryset()
-        return context
 
