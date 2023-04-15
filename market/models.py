@@ -38,6 +38,4 @@ class Offer(models.Model):
 #
 #     offer = models.ForeignKey(to=Offer, on_delete=models.CASCADE)
 #     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-#     created_timestamp = models.DateTimeField(auto_now_add=True)
 #     status = models.SmallIntegerField(default=NOT_TAKEN, choices=STATUSES)
-#     deadline = models.DateField()

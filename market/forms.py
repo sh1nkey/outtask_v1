@@ -20,12 +20,7 @@ class OfferCreation(forms.Form):
     deadline = forms.DateField()
 
 
-class LoginChangeForm(UserChangeForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
 
-    class Meta:
-        model = User
-        fields = ('username', )
 
 
 

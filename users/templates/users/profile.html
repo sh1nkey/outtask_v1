@@ -1,0 +1,57 @@
+{% extends 'market/base.html' %}
+{% load static %}
+
+{% block content %}
+   {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+     </ul>
+    {% endif %}
+
+<form method="post" style="background-color: #222; color: #fff;" action="{% url 'login-update' user.pk %}">
+    {% csrf_token %}
+    <div class="col-lg-6">
+        <label class="small mb-1" for="{{ form.username.id_for_label }}">Изменить username с {{ username }} на </label>
+        {{ form.username }}
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<form method="post" style="background-color: #222; color: #fff;" action="{% url 'vuz-update' user.pk %}">
+    {% csrf_token %}
+    <div class="col-lg-6">
+        <label class="small mb-1" for="{{ form1.uni_name.id_for_label }}">Изменить ВУЗ с {{ uni_name }} на </label>
+        {{ form1.uni_name}}
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+
+
+<h2>Ваши заказы: </h2>
+{% csrf_token %}
+ <table border="1">
+        <tr>
+          <th>Предмет</th>
+          <th>Задание</th>
+          <th>Цена</th>
+          <th>Крайний срок</th>
+        </tr>
+      {% for offer in offers %}
+        <tr>
+          <td>{{ offer.subj }}</td>
+          <td>{{ offer.task }}</td>
+          <td>{{ offer.price }}</td>
+          <td>{{ offer.deadline }}</td>
+          <td>
+              <form method="post">{% csrf_token %}
+                  <a href="#"><img src="{% static 'market/img/ubrat.png' %}" alt="#" width="20" height="20"></a>
+              </form>
+              </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+{% endblock%}
