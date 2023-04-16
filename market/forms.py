@@ -6,7 +6,7 @@ from users.models import Uni, User
 
 
 class UniForm(forms.Form):
-    uni_name = forms.ModelChoiceField(queryset=Uni.objects.all())
+    uni_name = forms.ModelChoiceField(queryset=Uni.objects.all(), label="Фильтрация во ВУЗу:")
 
     class Meta:
         model = User

@@ -1,0 +1,146 @@
+
+body {
+
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    line-height: 1.5;
+    background-color: #f5f5f5;
+}
+
+/* Стили для верхней шапки */
+
+header {
+    background-color: #000;
+    color: #fff;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-bottom: 50px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+}
+
+
+nav ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Стили для сортировочного блока */
+
+main {
+    display: block;
+    text-align: center;
+}
+
+.sorting {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+}
+
+.sorting ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.sorting li {
+    margin-right: 20px;
+}
+
+.sorting a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Стили для блоков с задачами */
+
+.task {
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-info {
+    flex-basis: 50%;
+}
+
+.task-title {
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.task-time {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #999;
+}
+
+.task-price {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.task-link {
+    flex-basis: 50%;
+    text-align: right;
+}
+
+.task-link a {
+    color: #00f;
+    text-decoration: underline;
+}
+
+.black-div {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    background-color: #000;
+}
+
+.black-div {
+    color: #fff;
+}
+
+.white-div {
+    border-radius: 2px;
+    border-color: #000;
+    background-color: #fff;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}

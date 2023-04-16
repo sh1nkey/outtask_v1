@@ -1,34 +1,43 @@
 {% extends 'market/base.html' %}
 
+{% load static %}
 
 {% block content %}
-   <form method="get">
+    <head>
+        <title>Мой сайт</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'market/css/market1.css' %}">
+    </head>
+
+    <form method="get" >
         {{ form.as_p }}
        <button type="submit" style="border: 1px solid black;">Фильтровать</button>
     </form>
-    <div style="height: 10px; width: 20px;"></div>
-    <a href="{% url 'createoffer' %}">Создать заказ</a>
-    <div style="height: 10px; width: 20px;"></div>
-    <h1>Открытые предложения</h1>
-    <table border="1">
-        <tr>
-          <th>Предмет</th>
-          <th>Задание</th>
-          <th>Цена</th>
-          <th>Крайний срок</th>
-          <th>Взять заказ</th>
-        </tr>
-        {% load static %}
-      {% for offer in offers %}
-        <tr>
-          <td>{{ offer.subj }}</td>
-          <td>{{ offer.task }}</td>
-          <td>{{ offer.price }}</td>
-          <td>{{ offer.deadline }}</td>
-         <td><a href="#"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></a></td>
-        </tr>
-       {% endfor %}
-    </table>
+
+        <main>
+            <div class="black-div">
+                <div> Предмет</div>
+                <div> Задание</div>
+                <div> Цена</div>
+                <div> Крайний срок</div>
+
+            </div>
+            {% for offer in offers%}
+                <div class="white-div">
+                    <div>
+                        <p>{{ offer.subj }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.task }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.price }} руб.</p>
+                    </div>
+                     <div>
+                        <p>{{ offer.deadline }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </main>
 {% endblock%}
-
-

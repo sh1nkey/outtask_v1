@@ -15,6 +15,7 @@ class MarketListView(ListView):
     template_name = 'market/market.html'
     title = 'Заказы'
 
+
     def get_queryset(self):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
