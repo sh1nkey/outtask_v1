@@ -36,6 +36,6 @@ class Order(models.Model):
     (READY, 'Заказ готов'),
     ]
 
-    offer = models.OneToOneField(to=Offer, on_delete=models.CASCADE)
+    offer = models.ForeignKey(to=Offer, on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     status = models.SmallIntegerField(default=NOT_TAKEN, choices=STATUSES)

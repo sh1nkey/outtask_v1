@@ -60,7 +60,7 @@
                         <p>{{ offer.deadline }}</p>
                     </div>
                      <div>
-                          <form method="post" action="{% url 'deleteorder' offer.pk %}">
+                          <form method="post" action="{% url 'deleteoffer' offer.pk %}">
                             {% csrf_token %}
                               <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
@@ -89,7 +89,10 @@
                         <p>{{ offer.deadline }}</p>
                     </div>
                      <div>
-                        <a href="#"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></a>
+                        <form method="post" action="{% url 'deleteorder' offer.pk %}">
+                            {% csrf_token %}
+                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                          </form>
                     </div>
                 </div>
       {% endfor %}

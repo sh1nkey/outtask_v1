@@ -21,10 +21,11 @@ class MarketListView(ListView):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
         offers.filter(deadline__lt=now()).delete()
-        users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
-        new_offers = offers.exclude(id__in=users_taken_offers)
-        return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
-
+        if self.request.user.id:
+            users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
+            new_offers = offers.exclude(id__in=users_taken_offers)
+            return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
+        return offers
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         form = UniForm()

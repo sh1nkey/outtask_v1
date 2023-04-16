@@ -70,6 +70,16 @@ class DeleteOffers(DeleteView):
     success_url = reverse_lazy('profile')
 
 
+class DeleteOrders(DeleteView):
+    model = Order
+    success_url = reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        print(self.model.objects.get(offer__id=self.kwargs.get('pk')))
+        return self.model.objects.get(offer__id=self.kwargs.get('pk'))
+
+
+
 
 
 

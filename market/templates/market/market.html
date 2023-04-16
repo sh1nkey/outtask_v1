@@ -37,7 +37,7 @@
                         <p>{{ offer.deadline }}</p>
                     </div>
                      <div>
-                         <form method="post" action="{% url 'addorder' offer.pk %}">
+                         <form method="post" action="{% url 'addoffer' offer.pk %}">
                             {% csrf_token %}
                               <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
