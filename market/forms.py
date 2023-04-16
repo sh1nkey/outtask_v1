@@ -14,10 +14,10 @@ class UniForm(forms.Form):
 
 
 class OfferCreation(forms.Form):
-    subject = forms.ModelChoiceField(queryset=Subject.objects.all())
-    task = forms.CharField(max_length=40)
-    price = forms.IntegerField()
-    deadline = forms.DateField()
+    subject = forms.ModelChoiceField(queryset=Subject.objects.all(), label="Предмет:")
+    task = forms.CharField(max_length=40, label="Задание кратко:")
+    price = forms.IntegerField(label="Цена:")
+    deadline = forms.DateField(label="Дедлайн:")
 
 
 

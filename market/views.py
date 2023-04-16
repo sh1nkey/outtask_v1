@@ -1,13 +1,15 @@
 from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
+from django.views import View
 from django.views.generic import ListView, TemplateView, FormView
 from django.views.generic.edit import FormMixin, DeleteView, UpdateView
 
 from market.forms import UniForm, OfferCreation
-from market.models import Offer
+from market.models import Offer, Order
 from users.models import Uni, User
 
 
@@ -15,12 +17,16 @@ class MarketListView(ListView):
     template_name = 'market/market.html'
     title = 'Заказы'
 
-
     def get_queryset(self):
         offers = Offer.objects.all()
+        print(offers)
         unis_check = self.request.GET.get('uni_name')
         offers.filter(deadline__lt=now()).delete()
-        return offers.filter(user__uni__pk=unis_check) if unis_check else offers
+        users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
+        new_offers = offers.exclude(id__in=users_taken_offers)
+        print( new_offers)
+        print(users_taken_offers)
+        return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -51,8 +57,17 @@ class OfferCreationView(FormView):
         return super().form_invalid(form)
 
 
-class OfferDelete(SuccessMessageMixin, DeleteView):
-    model = Offer
-    success_url = reverse_lazy('profile')
-    template_name = 'market/profile.html'
-    success_message = 'Заказ успешно удалён!'
+class OrderAdd(SuccessMessageMixin, FormView):
+    model = Order
+    success_url = reverse_lazy('markett')
+    template_name = 'market/market.html'
+    success_message = 'Заказ успешно добавлен!'
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        offer = Offer.objects.get(pk=self.kwargs['pk'])
+        if not Order.objects.filter(offer=offer).exists():
+            order = Order.objects.create(user=user, offer=offer)
+            order.save()
+        return redirect(self.success_url)
+

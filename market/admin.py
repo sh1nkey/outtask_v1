@@ -1,6 +1,5 @@
 from django.contrib import admin
-from market.models import  Subject, Offer
-
+from market.models import Subject, Offer, Order
 
 
 # Register your models here.
@@ -12,8 +11,8 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Offer)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['task']
+    list_display = ['pk', 'task']
 
-# @admin.register(Order)
-# class UserAdmin(admin.ModelAdmin):
-#     list_display = ['deadline']
+@admin.register(Order)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'offer']

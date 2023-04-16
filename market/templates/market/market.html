@@ -12,7 +12,7 @@
         {{ form.as_p }}
        <button type="submit" style="border: 1px solid black;">Фильтровать</button>
     </form>
-
+<a href="{% url 'createoffer' %}">Создать заказ</a>
         <main>
             <div class="black-div">
                 <div> Предмет</div>
@@ -21,7 +21,7 @@
                 <div> Крайний срок</div>
             </div>
 
-
+            {% csrf_token %}
             {% for offer in offers%}
                 <div class="white-div">
                     <div>
@@ -37,7 +37,10 @@
                         <p>{{ offer.deadline }}</p>
                     </div>
                      <div>
-                        <a href="#"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></a>
+                         <form method="post" action="{% url 'addorder' offer.pk %}">
+                            {% csrf_token %}
+                              <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                          </form>
                     </div>
                 </div>
 
