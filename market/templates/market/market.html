@@ -19,8 +19,9 @@
                 <div> Задание</div>
                 <div> Цена</div>
                 <div> Крайний срок</div>
-
             </div>
+
+
             {% for offer in offers%}
                 <div class="white-div">
                     <div>
@@ -35,9 +36,11 @@
                      <div>
                         <p>{{ offer.deadline }}</p>
                     </div>
+                     <div>
+                        <a href="#"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></a>
+                    </div>
                 </div>
+
             {% endfor %}
-
-
         </main>
 {% endblock%}

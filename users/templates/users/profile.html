@@ -1,7 +1,13 @@
 {% extends 'market/base.html' %}
 {% load static %}
 
+
+
 {% block content %}
+   <head>
+        <title>Мой сайт</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'market/css/market1.css' %}">
+    </head>
    {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -31,26 +37,34 @@
 
 
 <h2>Ваши заказы: </h2>
+<div class="black-div">
+                <div> Предмет</div>
+                <div> Задание</div>
+                <div> Цена</div>
+                <div> Крайний срок</div>
+</div>
 {% csrf_token %}
- <table border="1">
-        <tr>
-          <th>Предмет</th>
-          <th>Задание</th>
-          <th>Цена</th>
-          <th>Крайний срок</th>
-        </tr>
+
       {% for offer in offers %}
-        <tr>
-          <td>{{ offer.subj }}</td>
-          <td>{{ offer.task }}</td>
-          <td>{{ offer.price }}</td>
-          <td>{{ offer.deadline }}</td>
-          <td>
-              <form method="post">{% csrf_token %}
-                  <a href="#"><img src="{% static 'market/img/ubrat.png' %}" alt="#" width="20" height="20"></a>
-              </form>
-              </td>
-        </tr>
+<div class="white-div">
+                    <div>
+                        <p>{{ offer.subj }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.task }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.price }} руб.</p>
+                    </div>
+                     <div>
+                        <p>{{ offer.deadline }}</p>
+                    </div>
+                     <div>
+                        <a href="#"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></a>
+                    </div>
+                </div>
+
+
       {% endfor %}
     </table>
 
