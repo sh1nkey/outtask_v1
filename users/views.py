@@ -6,7 +6,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, FormView
 
 from market.forms import  UniForm
-from market.models import Offer
+from market.models import Offer, Order
 
 from users.forms import LoginChangeForm, UniUpdateForm
 from users.models import User
@@ -22,6 +22,7 @@ class Profile(TemplateView):
         context['form1'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
         context['offers'] = UsersOffersListView.get_queryset(self)
+        context['taken_offers'] = UsersOrdersListView.get_queryset(self)
         return context
 
 
@@ -52,10 +53,16 @@ class VUZUpdate(SuccessMessageMixin, FormView):
 
 class UsersOffersListView(ListView):
     template_name = 'market/market.html'
-    title = 'Заказы'
 
     def get_queryset(self):
         offers = Offer.objects.filter(user=self.request.user)
         return  offers
 
+class UsersOrdersListView(ListView):
+    template_name = 'market/market.html'
 
+    def get_queryset(self):
+        taken_offers_id = Order.objects.filter(user=self.request.user).values_list('offer', flat=True)
+        taken_offers=Offer.objects.filter(id__in=taken_offers_id)
+        print(taken_offers)
+        return  taken_offers

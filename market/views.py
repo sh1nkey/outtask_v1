@@ -19,13 +19,10 @@ class MarketListView(ListView):
 
     def get_queryset(self):
         offers = Offer.objects.all()
-        print(offers)
         unis_check = self.request.GET.get('uni_name')
         offers.filter(deadline__lt=now()).delete()
         users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
         new_offers = offers.exclude(id__in=users_taken_offers)
-        print( new_offers)
-        print(users_taken_offers)
         return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
 
     def get_context_data(self, *, object_list=None, **kwargs):

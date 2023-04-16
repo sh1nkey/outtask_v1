@@ -43,8 +43,8 @@
                 <div> Цена</div>
                 <div> Крайний срок</div>
 </div>
-{% csrf_token %}
 
+{% csrf_token %}
       {% for offer in offers %}
 <div class="white-div">
                     <div>
@@ -63,9 +63,32 @@
                         <a href="#"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></a>
                     </div>
                 </div>
-
-
       {% endfor %}
-    </table>
+<h2>Взятые вами заказы: </h2>
+<div class="black-div">
+                <div> Предмет</div>
+                <div> Задание</div>
+                <div> Цена</div>
+                <div> Крайний срок</div>
+</div>
+        {% for offer in taken_offers %}
+<div class="white-div">
+                    <div>
+                        <p>{{ offer.subj }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.task }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.price }} руб.</p>
+                    </div>
+                     <div>
+                        <p>{{ offer.deadline }}</p>
+                    </div>
+                     <div>
+                        <a href="#"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></a>
+                    </div>
+                </div>
+      {% endfor %}
 
 {% endblock%}
