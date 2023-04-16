@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from django.views.generic import TemplateView, ListView
-from django.views.generic.edit import UpdateView, FormView
+from django.views.generic.edit import UpdateView, FormView, DeleteView
 
 from market.forms import  UniForm
 from market.models import Offer, Order
@@ -39,7 +39,7 @@ class LoginUpdate(SuccessMessageMixin, UpdateView):
 
 class VUZUpdate(SuccessMessageMixin, FormView):
     form_class = UniForm
-    template_name = 'market/profile.html'
+    template_name = 'users/profile.html'
     success_message = 'ВУЗ изменен успешно!'
     success_url = reverse_lazy('profile')
 
@@ -52,17 +52,24 @@ class VUZUpdate(SuccessMessageMixin, FormView):
 
 
 class UsersOffersListView(ListView):
-    template_name = 'market/market.html'
 
     def get_queryset(self):
         offers = Offer.objects.filter(user=self.request.user)
         return  offers
 
 class UsersOrdersListView(ListView):
-    template_name = 'market/market.html'
 
     def get_queryset(self):
         taken_offers_id = Order.objects.filter(user=self.request.user).values_list('offer', flat=True)
         taken_offers=Offer.objects.filter(id__in=taken_offers_id)
-        print(taken_offers)
         return  taken_offers
+
+
+class DeleteOffers(DeleteView):
+    model = Offer
+    success_url = reverse_lazy('profile')
+
+
+
+
+
