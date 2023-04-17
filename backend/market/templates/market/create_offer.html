@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-<h2>Create an Offer</h2>
   <form method="post" action="{% url 'createoffer' %}" style="background-color: #222; color: #fff;">
         {% csrf_token %}
+      <h2>{{ form.label }}</h2>
         {{ form.as_p }}
         <button type="submit">Submit</button>
   </form>

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserChangeForm
+
 
 from market.models import Subject
 from users.models import Uni, User
@@ -18,6 +18,10 @@ class OfferCreation(forms.Form):
     task = forms.CharField(max_length=40, label="Задание кратко:")
     price = forms.IntegerField(label="Цена:")
     deadline = forms.DateField(label="Дедлайн:")
+
+    def __init__(self, *args, **kwargs):
+        super(OfferCreation, self).__init__(*args, **kwargs)
+        self.label = 'Создать новый заказ:'
 
 
 
