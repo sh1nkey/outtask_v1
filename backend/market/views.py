@@ -12,10 +12,13 @@ from market.forms import UniForm, OfferCreation
 from market.models import Offer, Order
 from users.models import Uni, User
 
+from backend.common.views import TitleMixin
 
-class MarketListView(ListView):
+
+class MarketListView(TitleMixin, ListView):
     template_name = 'market/market.html'
     title = 'Заказы'
+
 
     def get_queryset(self):
         offers = Offer.objects.all()
@@ -26,6 +29,7 @@ class MarketListView(ListView):
             new_offers = offers.exclude(id__in=users_taken_offers)
             return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
         return offers
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         form = UniForm()
@@ -35,12 +39,14 @@ class MarketListView(ListView):
         return context
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin,  TemplateView):
     template_name = 'market/index.html'
+    title = 'Главная страница'
 
 
-class OfferCreationView(FormView):
+class OfferCreationView(TitleMixin, FormView):
     template_name = 'market/create_offer.html'
+    title = 'Создать заказ'
     form_class = OfferCreation
     success_url = reverse_lazy('markett')
 

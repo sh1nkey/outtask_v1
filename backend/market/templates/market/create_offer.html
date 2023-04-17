@@ -1,6 +1,6 @@
 {% extends 'market/base.html' %}
 {% load static %}
-
+ <title>{{ title }}</title>
 {% block content %}
   <form method="post" action="{% url 'createoffer' %}" style="background-color: #222; color: #fff;">
         {% csrf_token %}
