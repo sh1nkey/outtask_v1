@@ -51,14 +51,10 @@ class OfferCreationView(FormView):
         new_offer.save()
         return super().form_valid(form)
 
-    def form_invalid(self, form):
-        return super().form_invalid(form)
-
 
 class OrderAdd(SuccessMessageMixin, FormView):
     model = Order
     success_url = reverse_lazy('markett')
-    template_name = 'market/market.html'
     success_message = 'Заказ успешно добавлен!'
 
     def post(self, request, *args, **kwargs):

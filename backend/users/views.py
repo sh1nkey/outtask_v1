@@ -29,7 +29,6 @@ class Profile(TemplateView):
 class LoginUpdate(SuccessMessageMixin, UpdateView):
     model = User
     form_class = LoginChangeForm
-    template_name = 'users/profile.html'
     success_message = 'Логин успешно изменен!'
     success_url = reverse_lazy('profile')
 
@@ -39,7 +38,6 @@ class LoginUpdate(SuccessMessageMixin, UpdateView):
 
 class VUZUpdate(SuccessMessageMixin, FormView):
     form_class = UniForm
-    template_name = 'users/profile.html'
     success_message = 'ВУЗ изменен успешно!'
     success_url = reverse_lazy('profile')
 
@@ -75,7 +73,6 @@ class DeleteOrders(DeleteView):
     success_url = reverse_lazy('profile')
 
     def get_object(self, queryset=None):
-        print(self.model.objects.get(offer__id=self.kwargs.get('pk')))
         return self.model.objects.get(offer__id=self.kwargs.get('pk'))
 
 
