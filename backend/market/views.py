@@ -5,15 +5,12 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
-from django.views import View
 from django.views.generic import ListView, TemplateView, FormView
-from django.views.generic.edit import FormMixin, DeleteView, UpdateView
-
 from market.forms import UniForm, OfferCreation
 from market.models import Offer, Order
 from users.models import Uni, User
 
-from backend.common.views import TitleMixin
+from common.views import TitleMixin
 
 
 class MarketListView(TitleMixin, ListView):

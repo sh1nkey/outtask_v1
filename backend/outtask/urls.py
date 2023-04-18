@@ -18,7 +18,7 @@ from django.urls import path, include
 
 from market.views import IndexView
 
-from backend.outtask import settings
+from outtask import settings
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),

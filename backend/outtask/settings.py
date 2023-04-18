@@ -22,10 +22,13 @@ env = environ.Env(
     DATABASE_PASSWORD=(str),
     DATABASE_HOST=(str),
     DATABASE_PORT=(str),
+
+    VK_CLIENT_ID=(str),
+    VK_SECRET_KEY=(str),
+    VK_KEY=(str)
+
+
 )
-
-
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -60,11 +63,11 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
     #myapps
     'users',
     'market',
-    'chat',
-    'captcha',
+    'chat'
 ]
 
 MIDDLEWARE = [
@@ -103,6 +106,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'outtask.wsgi.application'
+
+
 # Daphne
 ASGI_APPLICATION = "outtask.asgi.application"
 CHANNEL_LAYERS = {
@@ -167,6 +172,15 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
+SOCIALACCOUNT_PROVIDERS = {
+    'vk': {
+        'APP': {
+            'client_id': env('VK_CLIENT_ID'),
+            'secret': env('VK_SECRET_KEY'),
+            'key': env('VK_KEY')
+        }
+    }
+}
 
 if env('DEBUG'):
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

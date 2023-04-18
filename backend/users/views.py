@@ -13,7 +13,7 @@ from market.models import Offer, Order
 from users.forms import LoginChangeForm, UniUpdateForm
 from users.models import User
 
-from backend.common.views import TitleMixin
+from common.views import TitleMixin
 
 
 class Profile(TitleMixin, TemplateView):

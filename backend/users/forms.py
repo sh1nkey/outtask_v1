@@ -1,7 +1,6 @@
 from allauth.account.forms import LoginForm
 from django.contrib.auth.forms import UserChangeForm
 from django import forms
-from captcha.fields import CaptchaField
 from users.models import User, Uni
 
 
