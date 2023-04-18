@@ -1,4 +1,6 @@
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core import paginator
+from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
@@ -17,6 +19,7 @@ from backend.common.views import TitleMixin
 class Profile(TitleMixin, TemplateView):
     template_name = 'users/profile.html'
     title = 'Профиль'
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -26,6 +29,7 @@ class Profile(TitleMixin, TemplateView):
         context['uni_name'] = self.request.user.uni
         context['offers'] = UsersOffersListView.get_queryset(self)
         context['taken_offers'] = UsersOrdersListView.get_queryset(self)
+        context['rating'] = self.request.user.rating
         return context
 
 

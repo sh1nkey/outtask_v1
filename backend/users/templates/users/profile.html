@@ -25,6 +25,8 @@
     </div>
 </form>
 
+<h2>Ваш рейтинг: {{ rating }}</h2>
+
 <form method="post" style="background-color: #222; color: #fff;" action="{% url 'vuz-update' user.pk %}">
     {% csrf_token %}
     <div class="col-lg-6">
