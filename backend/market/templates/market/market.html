@@ -22,7 +22,7 @@
             </div>
 
             {% csrf_token %}
-            {% for offer in offers%}
+            {% for offer in my_models %}
                 <div class="white-div">
                     <div>
                         <p>{{ offer.subj }}</p>
@@ -36,14 +36,33 @@
                      <div>
                         <p>{{ offer.deadline }}</p>
                     </div>
+                    {% if user.is_authenticated%}
                      <div>
                          <form method="post" action="{% url 'addoffer' offer.pk %}">
                             {% csrf_token %}
                               <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
                     </div>
+                    {% endif %}
                 </div>
-
             {% endfor %}
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if my_models.has_previous %}
+                        <a href="?page=1">&laquo; первая</a>
+                        <a href="?page={{ my_models.previous_page_number }}">&lsaquo; предыдущая</a>
+                    {% endif %}
+
+                    <span class="current-page">
+                        Страница {{ my_models.number }} из {{ my_models.paginator.num_pages }}.
+                    </span>
+
+                    {% if my_models.has_next %}
+                        <a href="?page={{ my_models.next_page_number }}">следующая &rsaquo;</a>
+                        <a href="?page={{ my_models.paginator.num_pages }}">последняя &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
         </main>
 {% endblock%}

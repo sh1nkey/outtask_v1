@@ -1,6 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
@@ -18,6 +19,7 @@ from backend.common.views import TitleMixin
 class MarketListView(TitleMixin, ListView):
     template_name = 'market/market.html'
     title = 'Заказы'
+    paginate_by = 10
 
 
     def get_queryset(self):
@@ -36,6 +38,17 @@ class MarketListView(TitleMixin, ListView):
         context['offers'] = self.get_queryset()
         context['unis'] = Uni.objects.all()
         context['form'] = form
+        paginator = Paginator(context['offers'], self.paginate_by)
+        page = self.request.GET.get('page')
+
+        try:
+            my_models = paginator.page(page)
+        except PageNotAnInteger:
+            my_models = paginator.page(1)
+        except EmptyPage:
+            my_models = paginator.page(paginator.num_pages)
+
+        context['my_models'] = my_models
         return context
 
 
@@ -69,5 +82,6 @@ class OrderAdd(SuccessMessageMixin, FormView):
         if not Order.objects.filter(offer=offer).exists():
             order = Order.objects.create(user=user, offer=offer)
             order.save()
-        return redirect(self.success_url)
+            return redirect(self.success_url)
+
 

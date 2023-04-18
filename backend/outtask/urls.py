@@ -18,6 +18,8 @@ from django.urls import path, include
 
 from market.views import IndexView
 
+from backend.outtask import settings
+
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
@@ -26,8 +28,7 @@ urlpatterns = [
     path('market/', include('market.urls')),
     path('users/', include('users.urls')),
 
-
-
-    # path('market/', include('market.urls', namespace='market')), #это пока не нужно, функция не готова
-
 ]
+#
+if settings.DEBUG:
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')),)
