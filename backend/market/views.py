@@ -31,15 +31,15 @@ class MarketListView(TitleMixin, ListView):
         offers.filter(deadline__lt=now()).delete()
         if self.request.user.id:
             users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
-            new_offers = offers.exclude(id__in=users_taken_offers)
-            if (unis_check is not None) and (subj_check is None):
-                return new_offers.filter(user__uni__pk=unis_check) if unis_check else new_offers
-            elif (subj_check is not None) and (unis_check is None):
-                return new_offers.filter(subj_id=subj_check)
-            elif (unis_check and subj_check) is not None:
-                return new_offers.filter(subj_id=subj_check, user__uni__pk=unis_check)
-            else:
-                return new_offers
+            offers = offers.exclude(id__in=users_taken_offers)
+        if (unis_check is not None) and (subj_check is None):
+            return offers.filter(user__uni__pk=unis_check) if unis_check else offers
+        elif (subj_check is not None) and (unis_check is None):
+            return offers.filter(subj_id=subj_check)
+        elif (unis_check and subj_check) is not None:
+            return offers.filter(subj_id=subj_check, user__uni__pk=unis_check)
+        else:
+            return offers
 
         return offers
 
