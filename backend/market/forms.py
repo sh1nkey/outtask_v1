@@ -13,6 +13,11 @@ class UniForm(forms.Form):
         fields = ('uni_name',)
 
 
+class FilterForm(forms.Form):
+    uni_name = forms.ModelChoiceField(queryset=Uni.objects.all(), label="Фильтрация во ВУЗу:", required=False)
+    subj_name = forms.ModelChoiceField(queryset=Subject.objects.all(),   label="Фильтрация во предмету:", required=False)
+
+
 class OfferCreation(forms.Form):
     subject = forms.ModelChoiceField(queryset=Subject.objects.all(), label="Предмет:")
     task = forms.CharField(max_length=40, label="Задание кратко:")

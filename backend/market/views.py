@@ -12,29 +12,45 @@ from users.models import Uni, User
 
 from common.views import TitleMixin
 
+from backend.market.forms import FilterForm
+
 
 class MarketListView(TitleMixin, ListView):
     template_name = 'market/market.html'
     title = 'Заказы'
     paginate_by = 10
 
-
     def get_queryset(self):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
+        if  unis_check == '':
+            unis_check = None
+        subj_check = self.request.GET.get('subj_name')
+        if  subj_check == '':
+            subj_check = None
         offers.filter(deadline__lt=now()).delete()
         if self.request.user.id:
             users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
             new_offers = offers.exclude(id__in=users_taken_offers)
-            return new_offers.filter(user__uni__pk=unis_check) if unis_check else  new_offers
+            if (unis_check is not None) and (subj_check is None):
+                return new_offers.filter(user__uni__pk=unis_check) if unis_check else new_offers
+            elif (subj_check is not None) and (unis_check is None):
+                return new_offers.filter(subj_id=subj_check)
+            elif (unis_check and subj_check) is not None:
+                return new_offers.filter(subj_id=subj_check, user__uni__pk=unis_check)
+            else:
+                return new_offers
+
         return offers
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        form = UniForm()
         context['offers'] = self.get_queryset()
         context['unis'] = Uni.objects.all()
-        context['form'] = form
+        context['form'] = FilterForm()
+
+
+
         paginator = Paginator(context['offers'], self.paginate_by)
         page = self.request.GET.get('page')
 
