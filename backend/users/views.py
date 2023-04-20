@@ -79,6 +79,7 @@ class PerCabView(TitleMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context['offers'] = UsersOffersListView.get_queryset(self)
         context['taken_offers'] = UsersOrdersListView.get_queryset(self)
+        context['taken_orders'] = TakersOrdersListView.get_queryset(self)
         return context
 
 
@@ -95,6 +96,14 @@ class UsersOrdersListView(ListView):
         taken_offers_id = Order.objects.filter(user=self.request.user).values_list('offer', flat=True)
         taken_offers=Offer.objects.filter(id__in=taken_offers_id)
         return  taken_offers
+
+
+class TakersOrdersListView(ListView):
+
+    def get_queryset(self):
+        taken_orders = Order.objects.filter(offer__user=self.request.user)
+        print(taken_orders)
+        return  taken_orders
 
 
 class DeleteOffers(DeleteView):

@@ -13,7 +13,7 @@ class Subject(models.Model):
 
 class Offer(models.Model):
     subj = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    user= models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     task = models.CharField(max_length=40)
     price = models.PositiveIntegerField(default=0)
     deadline = models.DateField(blank=True, null=True)

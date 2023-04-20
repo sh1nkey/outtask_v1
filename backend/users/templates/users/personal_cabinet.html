@@ -45,17 +45,14 @@
       {% endfor %}
 <h2>Взятые вами заказы: </h2>
 <div class="black-div">
-                <div>связаться</div>
                 <div>Предмет</div>
                 <div>Задание</div>
                 <div>Цена</div>
                 <div>Крайний срок</div>
+                 <div>связаться</div>
 </div>
         {% for offer in taken_offers %}
-<div class="white-div">
-                    <div>
-                        <a href="{{ offer.user.socnet_link }}">тык</a>
-                    </div>
+                    <div class="white-div">
                     <div>
                         <p>{{ offer.subj }}</p>
                     </div>
@@ -68,6 +65,9 @@
                      <div>
                         <p>{{ offer.deadline }}</p>
                     </div>
+                    <div>
+                        <a href="{{ offer.user.socnet_link }}">тык</a>
+                    </div>
                      <div>
                         <form method="post" action="{% url 'deleteorder' offer.pk %}">
                             {% csrf_token %}
@@ -77,4 +77,27 @@
                 </div>
       {% endfor %}
 
+<h2>Предложения исполнителей: </h2>
+<div class="black-div">
+                <div>Имя пользователя</div>
+                <div>Рейтинг</div>
+                <div>id заказа</div>
+                <div>связаться</div>
+</div>
+ {% for order in taken_orders %}
+    <div class="white-div">
+                    <div>
+                        <p>{{ order.user.username }}</p>
+                    </div>
+                    <div>
+                        <p>{{  order.user.rating }}</p>
+                    </div>
+                    <div>
+                        <p>{{  order.offer.pk }} </p>
+                    </div>
+                    <div>
+                        <a href="{{ offer.user.socnet_link }}">тык</a>
+                    </div>
+        </div>
+      {% endfor %}
 {% endblock%}
