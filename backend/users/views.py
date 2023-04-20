@@ -102,7 +102,6 @@ class TakersOrdersListView(ListView):
 
     def get_queryset(self):
         taken_orders = Order.objects.filter(offer__user=self.request.user)
-        print(taken_orders)
         return  taken_orders
 
 
@@ -117,6 +116,24 @@ class DeleteOrders(DeleteView):
 
     def get_object(self, queryset=None):
         return self.model.objects.get(offer__id=self.kwargs.get('pk'))
+
+
+class GiveOrder(SuccessMessageMixin, FormView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+    success_message = 'Заказ успешно отдан!'
+
+    def post(self, request, *args, **kwargs):
+        change_status = self.model.objects.get(pk=self.kwargs.get('pk'))
+        offer_of_order = change_status.offer.pk
+        if change_status.status == 0:
+            change_status.status = 1
+            change_status.save()
+            delete_orders = Order.objects.filter(status=0, offer__pk=offer_of_order)
+            delete_orders.delete()
+        return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
+
+
 
 
 

@@ -25,8 +25,6 @@ class MarketListView(TitleMixin, ListView):
         unis_check = self.request.GET.get('uni_name')
         subj_check = self.request.GET.get('subj_name')
         newness_check = self.request.GET.get('newness')
-        print(newness_check)
-        print(type(newness_check))
 
         unis_check = None if unis_check == '' else unis_check
         subj_check = None if subj_check == '' else subj_check
@@ -34,6 +32,7 @@ class MarketListView(TitleMixin, ListView):
         if self.request.user.id:
             users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
             offers = offers.exclude(id__in=users_taken_offers)
+
         filter_Q = Q()
         if unis_check is not None:
             filter_Q &= Q(user__uni__pk=unis_check)
@@ -88,7 +87,7 @@ class OrderAdd(SuccessMessageMixin, FormView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         offer = Offer.objects.get(pk=self.kwargs['pk'])
-        if not Order.objects.filter(offer=offer).exists():
+        if not Order.objects.filter(offer=offer, user=user).exists():
             order = Order.objects.create(user=user, offer=offer)
             order.save()
-            return redirect(self.success_url)
+        return redirect(self.success_url)

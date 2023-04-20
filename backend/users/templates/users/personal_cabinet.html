@@ -98,6 +98,15 @@
                     <div>
                         <a href="{{ offer.user.socnet_link }}">тык</a>
                     </div>
+                      <div>
+                           <form method="post" action="{% url 'give-order' order.pk %}">
+                            {% csrf_token %}
+                               <button type="submit"><img src="{% static 'users/img/give.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                          </form>
+                        </div>
+                     <div>
+                                <button type="submit"><img src="{% static 'users/img/no.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                     </div>
         </div>
       {% endfor %}
 {% endblock%}
