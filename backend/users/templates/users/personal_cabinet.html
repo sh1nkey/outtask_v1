@@ -1,0 +1,72 @@
+{% extends 'market/base.html' %}
+{% load static %}
+
+{% block content %}
+
+ <head>
+        <title>Мой сайт</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'market/css/market1.css' %}">
+    </head>
+
+<h2>Ваши заказы: </h2>
+<div class="black-div">
+                <div> Предмет</div>
+                <div> Задание</div>
+                <div> Цена</div>
+                <div> Крайний срок</div>
+</div>
+
+{% csrf_token %}
+      {% for offer in offers %}
+<div class="white-div">
+                    <div>
+                        <p>{{ offer.subj }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.task }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.price }} руб.</p>
+                    </div>
+                     <div>
+                        <p>{{ offer.deadline }}</p>
+                    </div>
+                     <div>
+                          <form method="post" action="{% url 'deleteoffer' offer.pk %}">
+                            {% csrf_token %}
+                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                          </form>
+                    </div>
+                </div>
+      {% endfor %}
+<h2>Взятые вами заказы: </h2>
+<div class="black-div">
+                <div> Предмет</div>
+                <div> Задание</div>
+                <div> Цена</div>
+                <div> Крайний срок</div>
+</div>
+        {% for offer in taken_offers %}
+<div class="white-div">
+                    <div>
+                        <p>{{ offer.subj }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.task }}</p>
+                    </div>
+                    <div>
+                        <p>{{ offer.price }} руб.</p>
+                    </div>
+                     <div>
+                        <p>{{ offer.deadline }}</p>
+                    </div>
+                     <div>
+                        <form method="post" action="{% url 'deleteorder' offer.pk %}">
+                            {% csrf_token %}
+                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                          </form>
+                    </div>
+                </div>
+      {% endfor %}
+
+{% endblock%}

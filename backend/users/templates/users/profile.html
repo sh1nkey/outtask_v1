@@ -30,73 +30,19 @@
 <form method="post" style="background-color: #222; color: #fff;" action="{% url 'vuz-update' user.pk %}">
     {% csrf_token %}
     <div class="col-lg-6">
-        <label class="small mb-1" for="{{ form1.uni_name.id_for_label }}">Изменить ВУЗ с {{ uni_name }} на </label>
+        <label class="small mb-1" for="{{ form1.uni_name.id_for_label }}">{% if uni_name is  None %}Установить ВУЗ{% else %}Изменить ВУЗ с {{ uni_name }} на {% endif%} </label>
         {{ form1.uni_name}}
         <button type="submit">Submit</button>
     </div>
 </form>
 
-
-
-<h2>Ваши заказы: </h2>
-<div class="black-div">
-                <div> Предмет</div>
-                <div> Задание</div>
-                <div> Цена</div>
-                <div> Крайний срок</div>
-</div>
-
-{% csrf_token %}
-      {% for offer in offers %}
-<div class="white-div">
-                    <div>
-                        <p>{{ offer.subj }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.task }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.price }} руб.</p>
-                    </div>
-                     <div>
-                        <p>{{ offer.deadline }}</p>
-                    </div>
-                     <div>
-                          <form method="post" action="{% url 'deleteoffer' offer.pk %}">
-                            {% csrf_token %}
-                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
-                          </form>
-                    </div>
-                </div>
-      {% endfor %}
-<h2>Взятые вами заказы: </h2>
-<div class="black-div">
-                <div> Предмет</div>
-                <div> Задание</div>
-                <div> Цена</div>
-                <div> Крайний срок</div>
-</div>
-        {% for offer in taken_offers %}
-<div class="white-div">
-                    <div>
-                        <p>{{ offer.subj }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.task }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.price }} руб.</p>
-                    </div>
-                     <div>
-                        <p>{{ offer.deadline }}</p>
-                    </div>
-                     <div>
-                        <form method="post" action="{% url 'deleteorder' offer.pk %}">
-                            {% csrf_token %}
-                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
-                          </form>
-                    </div>
-                </div>
-      {% endfor %}
+<form method="post" style="background-color: #222; color: #fff;" action="{% url 'link-update' user.pk %}">
+    {% csrf_token %}
+    <div class="col-lg-6">
+        <label class="small mb-1" for="{{ form2.socnet_link.id_for_label }}">{% if socnet is None %}Установить ссылку на аккаунт соц. сети для связи{% else %}Изменить ссылку на соц.сеть  с {{ socnet }} на {% endif%} </label>
+        {{ form2.socnet_link  }}
+        <button type="submit">Submit</button>
+    </div>
+</form>
 
 {% endblock%}

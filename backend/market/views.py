@@ -17,7 +17,7 @@ from market.forms import FilterForm
 
 class MarketListView(TitleMixin, ListView):
     template_name = 'market/market.html'
-    title = 'Заказы'
+    title = 'Рынок'
     paginate_by = 10
 
     def get_queryset(self):
@@ -27,7 +27,6 @@ class MarketListView(TitleMixin, ListView):
         newness_check = self.request.GET.get('newness')
         print(newness_check)
         print(type(newness_check))
-
 
         unis_check = None if unis_check == '' else unis_check
         subj_check = None if subj_check == '' else subj_check
@@ -48,7 +47,6 @@ class MarketListView(TitleMixin, ListView):
         context['unis'] = Uni.objects.all()
         context['form'] = FilterForm()
 
-
         paginator = Paginator(context['offers'], self.paginate_by)
         page = self.request.GET.get('page')
 
@@ -63,7 +61,7 @@ class MarketListView(TitleMixin, ListView):
         return context
 
 
-class IndexView(TitleMixin,  TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'market/index.html'
     title = 'Главная страница'
 
@@ -94,5 +92,3 @@ class OrderAdd(SuccessMessageMixin, FormView):
             order = Order.objects.create(user=user, offer=offer)
             order.save()
             return redirect(self.success_url)
-
-

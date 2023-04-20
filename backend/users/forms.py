@@ -20,3 +20,9 @@ class LoginChangeForm(UserChangeForm):
         fields = ('username', )
 
 
+class LinkChangeForm(UserChangeForm):
+    socnet_link = forms.URLField(label='Ссылка на ваш аккаунт в Telegram/Vk для связи:')
+
+    class Meta:
+        model = User
+        fields = ('socnet_link', )

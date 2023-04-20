@@ -15,11 +15,12 @@ from users.models import User
 
 from common.views import TitleMixin
 
+from users.forms import LinkChangeForm
+
 
 class Profile(TitleMixin, TemplateView):
     template_name = 'users/profile.html'
     title = 'Профиль'
-    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,9 +28,10 @@ class Profile(TitleMixin, TemplateView):
         context['username'] = self.request.user.username
         context['form1'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
-        context['offers'] = UsersOffersListView.get_queryset(self)
-        context['taken_offers'] = UsersOrdersListView.get_queryset(self)
+        print(context['uni_name'])
         context['rating'] = self.request.user.rating
+        context['form2'] = LinkChangeForm
+        context['socnet'] = self.request.user.socnet_link
         return context
 
 
@@ -56,11 +58,36 @@ class VUZUpdate(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
+class LinkUpdate(SuccessMessageMixin, FormView):
+    form_class = LinkChangeForm
+    success_message = 'Ссылка на ваш аккаунт соц.сети установлена!'
+    success_url = reverse_lazy('profile')
+
+    def form_valid(self, form):
+        socnet_link = form.cleaned_data['socnet_link']
+        user = self.request.user
+        user.socnet_link = socnet_link
+        user.save()
+        return super().form_valid(form)
+
+
+class PerCabView(TitleMixin, TemplateView):
+    template_name = 'users/personal_cabinet.html'
+    title = 'Личный кабинет'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['offers'] = UsersOffersListView.get_queryset(self)
+        context['taken_offers'] = UsersOrdersListView.get_queryset(self)
+        return context
+
+
 class UsersOffersListView(ListView):
 
     def get_queryset(self):
         offers = Offer.objects.filter(user=self.request.user)
         return  offers
+
 
 class UsersOrdersListView(ListView):
 
