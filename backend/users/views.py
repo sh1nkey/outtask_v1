@@ -134,6 +134,37 @@ class GiveOrder(SuccessMessageMixin, FormView):
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
 
+class RefuseOrder(SuccessMessageMixin, DeleteView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+
+    def get_object(self, queryset=None):
+        return self.model.objects.get(id=self.kwargs.get('pk'))
+
+
+class OrderReady(SuccessMessageMixin, FormView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+    success_message = 'Заказ успешно отдан!'
+
+    def post(self, request, *args, **kwargs):
+        change_status = self.model.objects.get(pk=self.kwargs.get('pk'))
+        if change_status.status == 1:
+            change_status.status = 2
+            change_status.save()
+        return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
+
+class NotHereOrder(FormView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+
+    def post(self, request, *args, **kwargs):
+        user = self.model.objects.get(id=self.kwargs.get('pk')).user
+        user.rating -= 1
+        user.save()
+        self.model.objects.get(id=self.kwargs.get('pk')).delete()
+        return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
+
 
 
 

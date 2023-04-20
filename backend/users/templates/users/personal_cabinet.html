@@ -98,6 +98,7 @@
                     <div>
                         <a href="{{ offer.user.socnet_link }}">тык</a>
                     </div>
+        {% if order.status == 0 %}
                       <div>
                            <form method="post" action="{% url 'give-order' order.pk %}">
                             {% csrf_token %}
@@ -105,8 +106,26 @@
                           </form>
                         </div>
                      <div>
+                         <form method="post" action="{% url 'refuse' order.pk %}">
+                            {% csrf_token %}
                                 <button type="submit"><img src="{% static 'users/img/no.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                             </form>
                      </div>
+        {% endif %}
+         {% if order.status == 1 %}
+        <div>
+                           <form method="post" action="{% url 'ready' order.pk %}">
+                            {% csrf_token %}
+                               <button type="submit"><img src="{% static 'users/img/ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                          </form>
+                        </div>
+                     <div>
+                         <form method="post" action="{% url 'not-ready' order.pk %}">
+                            {% csrf_token %}
+                                <button type="submit"><img src="{% static 'users/img/not_ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                             </form>
+                     </div>
+        {% endif %}
         </div>
       {% endfor %}
 {% endblock%}

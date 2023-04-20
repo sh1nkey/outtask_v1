@@ -91,3 +91,5 @@ class OrderAdd(SuccessMessageMixin, FormView):
             order = Order.objects.create(user=user, offer=offer)
             order.save()
         return redirect(self.success_url)
+
+

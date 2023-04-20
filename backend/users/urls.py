@@ -1,6 +1,7 @@
 from django.urls import path
 
-from users.views import LoginUpdate, VUZUpdate, Profile, DeleteOffers, DeleteOrders, PerCabView, LinkUpdate, GiveOrder
+from users.views import LoginUpdate, VUZUpdate, Profile, DeleteOffers, DeleteOrders, PerCabView, \
+    LinkUpdate, GiveOrder, RefuseOrder, OrderReady, NotHereOrder
 
 urlpatterns= [
     path("profile/", Profile.as_view(), name="profile"),
@@ -11,4 +12,7 @@ urlpatterns= [
     path("offer-delete/<int:pk>/",  DeleteOffers.as_view(), name="deleteoffer"),
     path("order-delete/<int:pk>/",  DeleteOrders.as_view(), name="deleteorder"),
     path("give_order/<int:pk>/",  GiveOrder.as_view(), name="give-order"),
+    path("refuse/<int:pk>/",  RefuseOrder.as_view(), name="refuse"),
+    path("order_ready/<int:pk>/",  OrderReady.as_view(), name="ready"),
+    path("order_not_ready/<int:pk>/",  NotHereOrder.as_view(), name="not-ready"),
 ]
