@@ -126,6 +126,26 @@
                              </form>
                      </div>
         {% endif %}
+         {% if order.status == 2 %}
+                     <div>
+                           <form method="post" action="{% url 'like' order.pk %}">
+                            {% csrf_token %}
+                               <button type="submit"><img src="{% static 'users/img/like.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                          </form>
+                        </div>
+                    <div>
+                         <form method="post" action="{% url 'neutral' order.pk %}">
+                            {% csrf_token %}
+                                <button type="submit"><img src="{% static 'users/img/neutral.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                             </form>
+                     </div>
+                     <div>
+                         <form method="post" action="{% url 'not-ready' order.pk %}">
+                            {% csrf_token %}
+                                <button type="submit"><img src="{% static 'users/img/dislike.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                             </form>
+                     </div>
+        {% endif %}
         </div>
       {% endfor %}
 {% endblock%}

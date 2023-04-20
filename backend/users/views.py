@@ -28,7 +28,6 @@ class Profile(TitleMixin, TemplateView):
         context['username'] = self.request.user.username
         context['form1'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
-        print(context['uni_name'])
         context['rating'] = self.request.user.rating
         context['form2'] = LinkChangeForm
         context['socnet'] = self.request.user.socnet_link
@@ -154,19 +153,40 @@ class OrderReady(SuccessMessageMixin, FormView):
             change_status.save()
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
+
 class NotHereOrder(FormView):
     model = Order
     success_url = reverse_lazy('personal_cabinet')
 
     def post(self, request, *args, **kwargs):
-        user = self.model.objects.get(id=self.kwargs.get('pk')).user
+        ord = Order.objects.get(pk=self.kwargs.get('pk'))
+        user = ord.user
         user.rating -= 1
         user.save()
-        self.model.objects.get(id=self.kwargs.get('pk')).delete()
+        ord.offer.delete()
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
+class LikeView(SuccessMessageMixin, FormView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+    success_message = 'Рейтинг исполнителя повышен!!'
 
+    def post(self, request, *args, **kwargs):
+        print(kwargs.get('pk'))
+        working_order = self.model.objects.get(pk=self.kwargs.get('pk'))
+        print(working_order)
+        working_order.user.rating += 1
+        working_order.user.save()
+        working_order.offer.delete()
+        return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
+class NeutralView(FormView):
+    model = Order
+    success_url = reverse_lazy('personal_cabinet')
+
+    def post(self, request, *args, **kwargs):
+        self.model.objects.get(pk=self.kwargs.get('pk')).delete()
+        return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
 
 
