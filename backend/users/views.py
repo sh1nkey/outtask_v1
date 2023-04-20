@@ -99,12 +99,12 @@ class UsersOrdersListView(ListView):
 
 class DeleteOffers(DeleteView):
     model = Offer
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('personal_cabinet')
 
 
 class DeleteOrders(DeleteView):
     model = Order
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('personal_cabinet')
 
     def get_object(self, queryset=None):
         return self.model.objects.get(offer__id=self.kwargs.get('pk'))

@@ -10,6 +10,7 @@
 
 <h2>Ваши заказы: </h2>
 <div class="black-div">
+                <div>id</div>
                 <div> Предмет</div>
                 <div> Задание</div>
                 <div> Цена</div>
@@ -19,6 +20,9 @@
 {% csrf_token %}
       {% for offer in offers %}
 <div class="white-div">
+                     <div>
+                        <p>{{ offer.pk }}</p>
+                    </div>
                     <div>
                         <p>{{ offer.subj }}</p>
                     </div>
@@ -41,13 +45,17 @@
       {% endfor %}
 <h2>Взятые вами заказы: </h2>
 <div class="black-div">
-                <div> Предмет</div>
-                <div> Задание</div>
-                <div> Цена</div>
-                <div> Крайний срок</div>
+                <div>связаться</div>
+                <div>Предмет</div>
+                <div>Задание</div>
+                <div>Цена</div>
+                <div>Крайний срок</div>
 </div>
         {% for offer in taken_offers %}
 <div class="white-div">
+                    <div>
+                        <a href="{{ offer.user.socnet_link }}">тык</a>
+                    </div>
                     <div>
                         <p>{{ offer.subj }}</p>
                     </div>
