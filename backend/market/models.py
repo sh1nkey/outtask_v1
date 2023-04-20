@@ -1,3 +1,4 @@
+import django
 from django.db import models
 from users.models import User
 from django.utils.timezone import now
@@ -16,6 +17,7 @@ class Offer(models.Model):
     task = models.CharField(max_length=40)
     price = models.PositiveIntegerField(default=0)
     deadline = models.DateField(blank=True, null=True)
+    date_create = models.DateTimeField(default=django.utils.timezone.now)
 
     class Meta:
         ordering = ['deadline']

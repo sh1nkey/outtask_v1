@@ -16,6 +16,7 @@ class UniForm(forms.Form):
 class FilterForm(forms.Form):
     uni_name = forms.ModelChoiceField(queryset=Uni.objects.all(), label="Фильтрация во ВУЗу:", required=False)
     subj_name = forms.ModelChoiceField(queryset=Subject.objects.all(),   label="Фильтрация во предмету:", required=False)
+    newness = forms.BooleanField(label='Сортировать по новизне', required=False, widget=forms.CheckboxInput(attrs={'class': 'my-checkbox'}))
 
 
 class OfferCreation(forms.Form):

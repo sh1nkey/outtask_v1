@@ -9,10 +9,10 @@ from django.views.generic import ListView, TemplateView, FormView
 from market.forms import UniForm, OfferCreation
 from market.models import Offer, Order
 from users.models import Uni, User
-
+from django.db.models import Q
 from common.views import TitleMixin
 
-from backend.market.forms import FilterForm
+from market.forms import FilterForm
 
 
 class MarketListView(TitleMixin, ListView):
@@ -23,32 +23,30 @@ class MarketListView(TitleMixin, ListView):
     def get_queryset(self):
         offers = Offer.objects.all()
         unis_check = self.request.GET.get('uni_name')
-        if  unis_check == '':
-            unis_check = None
         subj_check = self.request.GET.get('subj_name')
-        if  subj_check == '':
-            subj_check = None
+        newness_check = self.request.GET.get('newness')
+        print(newness_check)
+        print(type(newness_check))
+
+
+        unis_check = None if unis_check == '' else unis_check
+        subj_check = None if subj_check == '' else subj_check
         offers.filter(deadline__lt=now()).delete()
         if self.request.user.id:
             users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
             offers = offers.exclude(id__in=users_taken_offers)
-        if (unis_check is not None) and (subj_check is None):
-            return offers.filter(user__uni__pk=unis_check) if unis_check else offers
-        elif (subj_check is not None) and (unis_check is None):
-            return offers.filter(subj_id=subj_check)
-        elif (unis_check and subj_check) is not None:
-            return offers.filter(subj_id=subj_check, user__uni__pk=unis_check)
-        else:
-            return offers
-
-        return offers
+        filter_Q = Q()
+        if unis_check is not None:
+            filter_Q &= Q(user__uni__pk=unis_check)
+        if subj_check is not None:
+            filter_Q &= Q(subj_id=subj_check)
+        return offers.filter(filter_Q).order_by('-date_create') if newness_check else offers.filter(filter_Q)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['offers'] = self.get_queryset()
         context['unis'] = Uni.objects.all()
         context['form'] = FilterForm()
-
 
 
         paginator = Paginator(context['offers'], self.paginate_by)

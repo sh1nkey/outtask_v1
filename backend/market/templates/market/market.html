@@ -12,7 +12,9 @@
         {{ form.as_p }}
        <button type="submit" style="border: 1px solid black;">Фильтровать</button>
     </form>
-<a href="{% url 'createoffer' %}">Создать заказ</a>
+    {% if user.is_authenticated%}
+        <a href="{% url 'createoffer' %}">Создать заказ</a>
+    {% endif%}
         <main>
             <div class="black-div">
                 <div> Предмет</div>
