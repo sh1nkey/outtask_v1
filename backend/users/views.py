@@ -18,18 +18,18 @@ from common.views import TitleMixin
 from users.forms import LinkChangeForm
 
 
-class Profile(TitleMixin, TemplateView):
+class Profile(TitleMixin, TemplateView): # выводит профиль (и все нужные формы и данные)
     template_name = 'users/profile.html'
     title = 'Профиль'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] =  LoginChangeForm
+        context['login_form'] = LoginChangeForm
         context['username'] = self.request.user.username
-        context['form1'] = UniUpdateForm
+        context['uni_form'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
         context['rating'] = self.request.user.rating
-        context['form2'] = LinkChangeForm
+        context['link_form'] = LinkChangeForm
         context['socnet'] = self.request.user.socnet_link
         return context
 
@@ -70,7 +70,7 @@ class LinkUpdate(SuccessMessageMixin, FormView):
         return super().form_valid(form)
 
 
-class PerCabView(TitleMixin, TemplateView):
+class PerCabView(TitleMixin, TemplateView): # выводит личный кабинет (и все нужные формы и данные)
     template_name = 'users/personal_cabinet.html'
     title = 'Личный кабинет'
 
@@ -97,11 +97,11 @@ class UsersOrdersListView(ListView):
         return  taken_offers
 
 
-class TakersOrdersListView(ListView):
+class TakersOrdersListView(ListView):  # выводит заявки на ваши заказы от других юзеров
 
     def get_queryset(self):
         taken_orders = Order.objects.filter(offer__user=self.request.user)
-        return  taken_orders
+        return taken_orders
 
 
 class DeleteOffers(DeleteView):
@@ -117,7 +117,7 @@ class DeleteOrders(DeleteView):
         return self.model.objects.get(offer__id=self.kwargs.get('pk'))
 
 
-class GiveOrder(SuccessMessageMixin, FormView):
+class GiveOrder(SuccessMessageMixin, FormView): # отдать заказ исполнителю, оставившему заявку
     model = Order
     success_url = reverse_lazy('personal_cabinet')
     success_message = 'Заказ успешно отдан!'
@@ -133,7 +133,7 @@ class GiveOrder(SuccessMessageMixin, FormView):
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
 
-class RefuseOrder(SuccessMessageMixin, DeleteView):
+class RefuseOrder(SuccessMessageMixin, DeleteView): # отказать исполнителю, обнулить его заявку
     model = Order
     success_url = reverse_lazy('personal_cabinet')
 
@@ -154,7 +154,7 @@ class OrderReady(SuccessMessageMixin, FormView):
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 
 
-class NotHereOrder(FormView):
+class NotHereOrder(FormView): # заказ не готов к сроку
     model = Order
     success_url = reverse_lazy('personal_cabinet')
 
@@ -172,13 +172,12 @@ class LikeView(SuccessMessageMixin, FormView):
     success_message = 'Рейтинг исполнителя повышен!!'
 
     def post(self, request, *args, **kwargs):
-        print(kwargs.get('pk'))
         working_order = self.model.objects.get(pk=self.kwargs.get('pk'))
-        print(working_order)
         working_order.user.rating += 1
         working_order.user.save()
         working_order.offer.delete()
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
+
 
 class NeutralView(FormView):
     model = Order

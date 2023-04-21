@@ -11,11 +11,10 @@ from market.models import Offer, Order
 from users.models import Uni, User
 from django.db.models import Q
 from common.views import TitleMixin
-
 from market.forms import FilterForm
 
 
-class MarketListView(TitleMixin, ListView):
+class MarketListView(TitleMixin, ListView): # главный view страницы "рынок", который выводит всю информацию и таблицы
     template_name = 'market/market.html'
     title = 'Рынок'
     paginate_by = 10
@@ -28,12 +27,12 @@ class MarketListView(TitleMixin, ListView):
 
         unis_check = None if unis_check == '' else unis_check
         subj_check = None if subj_check == '' else subj_check
-        offers.filter(deadline__lt=now()).delete()
+        offers.filter(deadline__lt=now()).delete()  # удаляет просроченные заказы
         if self.request.user.id:
             users_taken_offers = list(Order.objects.filter(user=self.request.user).values_list('offer_id', flat=True))
             offers = offers.exclude(id__in=users_taken_offers)
 
-        filter_Q = Q()
+        filter_Q = Q()  # создание сложного запроса: проверка трех независимых условий
         if unis_check is not None:
             filter_Q &= Q(user__uni__pk=unis_check)
         if subj_check is not None:
@@ -46,7 +45,7 @@ class MarketListView(TitleMixin, ListView):
         context['unis'] = Uni.objects.all()
         context['form'] = FilterForm()
 
-        paginator = Paginator(context['offers'], self.paginate_by)
+        paginator = Paginator(context['offers'], self.paginate_by) # отсюда в этой функции начинается логика пагинации
         page = self.request.GET.get('page')
 
         try:
@@ -87,7 +86,7 @@ class OrderAdd(SuccessMessageMixin, FormView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         offer = Offer.objects.get(pk=self.kwargs['pk'])
-        if not Order.objects.filter(offer=offer, user=user).exists():
+        if not Order.objects.filter(offer=offer, user=user).exists(): # чтобы юзер случайно не создал два заказа с помощью дабл-клика
             order = Order.objects.create(user=user, offer=offer)
             order.save()
         return redirect(self.success_url)

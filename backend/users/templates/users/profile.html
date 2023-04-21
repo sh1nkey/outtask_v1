@@ -19,8 +19,8 @@
 <form method="post" style="background-color: #222; color: #fff;" action="{% url 'login-update' user.pk %}">
     {% csrf_token %}
     <div class="col-lg-6">
-        <label class="small mb-1" for="{{ form.username.id_for_label }}">Изменить username с {{ username }} на </label>
-        {{ form.username }}
+        <label class="small mb-1" for="{{ login_form.username.id_for_label }}">Изменить username с {{ username }} на </label>
+        {{ login_form.username }}
         <button type="submit">Submit</button>
     </div>
 </form>
@@ -30,8 +30,8 @@
 <form method="post" style="background-color: #222; color: #fff;" action="{% url 'vuz-update' user.pk %}">
     {% csrf_token %}
     <div class="col-lg-6">
-        <label class="small mb-1" for="{{ form1.uni_name.id_for_label }}">{% if uni_name is  None %}Установить ВУЗ{% else %}Изменить ВУЗ с {{ uni_name }} на {% endif%} </label>
-        {{ form1.uni_name}}
+        <label class="small mb-1" for="{{ uni_form.uni_name.id_for_label }}">{% if uni_name is  None %}Установить ВУЗ{% else %}Изменить ВУЗ с {{ uni_name }} на {% endif%} </label>
+        {{ uni_form.uni_name}}
         <button type="submit">Submit</button>
     </div>
 </form>
@@ -39,8 +39,8 @@
 <form method="post" style="background-color: #222; color: #fff;" action="{% url 'link-update' user.pk %}">
     {% csrf_token %}
     <div class="col-lg-6">
-        <label class="small mb-1" for="{{ form2.socnet_link.id_for_label }}">{% if socnet is None %}Установить ссылку на аккаунт соц. сети для связи{% else %}Изменить ссылку на соц.сеть  с {{ socnet }} на {% endif%} </label>
-        {{ form2.socnet_link  }}
+        <label class="small mb-1" for="{{ link_form.socnet_link.id_for_label }}">{% if socnet is None %}Установить ссылку на аккаунт соц. сети для связи{% else %}Изменить ссылку на соц.сеть  с {{ socnet }} на {% endif%} </label>
+        {{ link_form.socnet_link  }}
         <button type="submit">Submit</button>
     </div>
 </form>
