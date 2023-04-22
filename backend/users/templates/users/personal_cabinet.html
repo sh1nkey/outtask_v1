@@ -9,143 +9,224 @@
     </head>
 
 <h2>Ваши заказы: </h2>
-<div class="black-div">
-                <div>id</div>
-                <div> Предмет</div>
-                <div> Задание</div>
-                <div> Цена</div>
-                <div> Крайний срок</div>
-</div>
+<style>
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  th {
+    background-color: #222;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
 
-{% csrf_token %}
-      {% for offer in offers %}
-<div class="white-div">
-                     <div>
-                        <p>{{ offer.pk }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.subj }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.task }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.price }} руб.</p>
-                    </div>
-                     <div>
-                        <p>{{ offer.deadline }}</p>
-                    </div>
-                     <div>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Предмет</th>
+      <th>Задание</th>
+      <th>Цена</th>
+      <th>Крайний срок</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% csrf_token %}
+    {% for offer in offers%}
+    <tr>
+      <td>{{ offer.pk }}</td>
+      <td>{{ offer.subj }}</td>
+      <td>{{ offer.task }}</td>
+      <td>{{ offer.price }} руб.</td>
+      <td>{{ offer.deadline }}</td>
+      <td>
+         <div>
                           <form method="post" action="{% url 'deleteoffer' offer.pk %}">
                             {% csrf_token %}
                               <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
                     </div>
-                </div>
-      {% endfor %}
-<h2>Взятые вами заказы: </h2>
-<div class="black-div">
-                <div>Предмет</div>
-                <div>Задание</div>
-                <div>Цена</div>
-                <div>Крайний срок</div>
-                 <div>связаться</div>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<style>
+  h2 {
+    text-align: center;
+    white-space: nowrap;
+  }
+</style>
+<div style="margin: 10px; padding: 10px;">
+  <p></p>
 </div>
-        {% for offer in taken_offers %}
-                    <div class="white-div">
-                    <div>
-                        <p>{{ offer.subj }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.task }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.price }} руб.</p>
-                    </div>
-                     <div>
-                        <p>{{ offer.deadline }}</p>
-                    </div>
-                    <div>
+<h2>Взятые вами заказы:</h2>
+<style>
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  th {
+    background-color: #222;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Предмет</th>
+      <th>Задание</th>
+      <th>Цена</th>
+      <th>Крайний срок</th>
+      <th>Связаться</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% csrf_token %}
+    {% for offer in taken_offers %}
+    <tr>
+      <td>{{ offer.subj }}</td>
+      <td>{{ offer.task }}</td>
+      <td>{{ offer.price }} руб.</td>
+      <td>{{ offer.deadline }}</td>
+      <td>
+        <div>
                         <a href="{{ offer.user.socnet_link }}">тык</a>
                     </div>
-                     <div>
+      </td>
+      <td>
+        <div>
                         <form method="post" action="{% url 'deleteorder' offer.pk %}">
                             {% csrf_token %}
                               <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
                     </div>
-                </div>
-      {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div style="margin: 10px; padding: 10px;">
+  <p></p>
+</div>
 
 <h2>Предложения исполнителей: </h2>
-<div class="black-div">
-                <div>Имя пользователя</div>
-                <div>Рейтинг</div>
-                <div>id заказа</div>
-                <div>связаться</div>
-</div>
- {% for order in taken_orders %}
-    <div class="white-div">
-                    <div>
-                        <p>{{ order.user.username }}</p>
+<style>
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+  }
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  th {
+    background-color: #222;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID заказа</th>
+      <th>Исполнитель</th>
+        <th>Связаться</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% csrf_token %}
+    {% for order in taken_orders %}
+    <tr>
+      <td>{{  order.offer.pk }}</td>
+      <td>{{ order.user.username }} ({{  order.user.rating }})</td>
+        {% if order.status != 2 %}
+              <td>
+        <div>
+                        <a href="{% if order.user.socnet_link %}{{ order.user.socnet_link }}{% else %}#{% endif %}">тык</a>
                     </div>
-                    <div>
-                        <p>{{  order.user.rating }}</p>
-                    </div>
-                    <div>
-                        <p>{{  order.offer.pk }} </p>
-                    </div>
-                    <div>
-                        <a href="{{ offer.user.socnet_link }}">тык</a>
-                    </div>
-        {% if order.status == 0 %}
-                      <div>
+        </td>
+        {% else %}
+         <td>    <div>
+                         <form method="post" action="{% url 'like' order.pk %}">
+                            {% csrf_token %}
+                                <button type="submit"><img src="{% static 'users/img/like.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                             </form>
+                     </div></td>
+        {% endif %}
+      {% if order.status == 0 %}
+        <td> <div>
                            <form method="post" action="{% url 'give-order' order.pk %}">
                             {% csrf_token %}
                                <button type="submit"><img src="{% static 'users/img/give.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                           </form>
-                        </div>
-                     <div>
+                        </div></td>
+      <td> <div>
                          <form method="post" action="{% url 'refuse' order.pk %}">
                             {% csrf_token %}
                                 <button type="submit"><img src="{% static 'users/img/no.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
-                     </div>
-        {% endif %}
-         {% if order.status == 1 %}
-        <div>
+                     </div></td>
+      {% endif %}
+      {% if order.status == 1 %}
+      <td> <div>
                            <form method="post" action="{% url 'ready' order.pk %}">
                             {% csrf_token %}
                                <button type="submit"><img src="{% static 'users/img/ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                           </form>
-                        </div>
-                     <div>
+                        </div></td>
+      <td> <div>
                          <form method="post" action="{% url 'not-ready' order.pk %}">
                             {% csrf_token %}
                                 <button type="submit"><img src="{% static 'users/img/not_ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
-                     </div>
-        {% endif %}
-         {% if order.status == 2 %}
-                     <div>
-                           <form method="post" action="{% url 'like' order.pk %}">
-                            {% csrf_token %}
-                               <button type="submit"><img src="{% static 'users/img/like.png' %}" alt="Добавить заказ" width="90" height="30"></button>
-                          </form>
-                        </div>
-                    <div>
+                     </div></td>
+
+
+      {% endif %}
+      {% if order.status == 2 %}
+      <td>    <div>
                          <form method="post" action="{% url 'neutral' order.pk %}">
                             {% csrf_token %}
                                 <button type="submit"><img src="{% static 'users/img/neutral.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
-                     </div>
-                     <div>
+                     </div></td>
+      <td> <div>
                          <form method="post" action="{% url 'not-ready' order.pk %}">
                             {% csrf_token %}
                                 <button type="submit"><img src="{% static 'users/img/dislike.png' %}" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
-                     </div>
-        {% endif %}
-        </div>
-      {% endfor %}
+                     </div></td>
+         {% endif %}
+    {% endfor %}
+      </tr>
+  </tbody>
+</table>
 {% endblock%}

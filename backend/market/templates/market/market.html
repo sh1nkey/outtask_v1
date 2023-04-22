@@ -16,38 +16,90 @@
         <a href="{% url 'createoffer' %}">Создать заказ</a>
     {% endif%}
         <main>
-            <div class="black-div">
-                <div> Предмет</div>
-                <div> Задание</div>
-                <div> Цена</div>
-                <div> Крайний срок</div>
-            </div>
+    <style>
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+  }
+  form {
+        background-color: #333; /* цвет фона */
+        color: #fff; /* цвет текста */
+        padding: 10px; /* внутренний отступ */
+        border-radius: 5px; /* скругленные углы */
+        display: flex; /* отображать форму в строку */
+        justify-content: center; /* выравнивать по центру */
+        align-items: center; /* выравнивать по центру */
+    }
 
-            {% csrf_token %}
-            {% for offer in my_models %}
-                <div class="white-div">
-                    <div>
-                        <p>{{ offer.subj }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.task }}</p>
-                    </div>
-                    <div>
-                        <p>{{ offer.price }} руб.</p>
-                    </div>
-                     <div>
-                        <p>{{ offer.deadline }}</p>
-                    </div>
-                    {% if user.is_authenticated%}
-                     <div>
-                         <form method="post" action="{% url 'addoffer' offer.pk %}">
-                            {% csrf_token %}
-                              <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
-                          </form>
-                    </div>
-                    {% endif %}
-                </div>
-            {% endfor %}
+    /* Стиль для кнопки в форме */
+    button[type="submit"] {
+        background-color: #fff; /* цвет фона */
+        color: #333; /* цвет текста */
+        border: none; /* убрать границу */
+        border-radius: 5px; /* скругленные углы */
+        padding: 10px 20px; /* внутренний отступ */
+        margin-left: 10px; /* отступ слева */
+        cursor: pointer; /* курсор в виде указателя */
+    }
+
+    /* Стиль для ссылки "Создать заказ" */
+    a[href="{% url 'createoffer' %}"] {
+  background-color: #fff; /* цвет фона */
+  color: #333; /* цвет текста */
+  border: none; /* убрать границу */
+  border-radius: 5px; /* скругленные углы */
+  padding: 10px 20px; /* внутренний отступ */
+  margin-left: 10px; /* отступ слева */
+  margin-top: -20px; /* отступ сверху */
+  text-decoration: none; /* убрать подчеркивание */
+  cursor: pointer; /* курсор в виде указателя */
+}
+
+  th, td {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  th {
+    background-color: #222;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Предмет</th>
+      <th>Задание</th>
+      <th>Цена</th>
+      <th>Крайний срок</th>
+      <th>Действие</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% csrf_token %}
+    {% for offer in my_models %}
+    <tr>
+      <td>{{ offer.subj }}</td>
+      <td>{{ offer.task }}</td>
+      <td>{{ offer.price }} руб.</td>
+      <td>{{ offer.deadline }}</td>
+      <td>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'addoffer' offer.pk %}">
+          {% csrf_token %}
+          <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+        </form>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
             <div class="pagination">
                 <span class="step-links">
@@ -68,3 +120,9 @@
             </div>
         </main>
 {% endblock%}
+
+
+{% csrf_token %}
+            {% for offer in my_models %}
+
+            {% endfor %}

@@ -16,33 +16,98 @@
      </ul>
     {% endif %}
 
-<form method="post" style="background-color: #222; color: #fff;" action="{% url 'login-update' user.pk %}">
-    {% csrf_token %}
-    <div class="col-lg-6">
-        <label class="small mb-1" for="{{ login_form.username.id_for_label }}">Изменить username с {{ username }} на </label>
-        {{ login_form.username }}
-        <button type="submit">Submit</button>
-    </div>
-</form>
+<style>
+    form {
+        background-color: #222;
+        color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 0 auto;
+        max-width: 400px;
+        margin-top: 50px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fade-in 0.5s ease-in-out forwards;
+    }
 
-<h2>Ваш рейтинг: {{ rating }}</h2>
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-<form method="post" style="background-color: #222; color: #fff;" action="{% url 'vuz-update' user.pk %}">
-    {% csrf_token %}
-    <div class="col-lg-6">
-        <label class="small mb-1" for="{{ uni_form.uni_name.id_for_label }}">{% if uni_name is  None %}Установить ВУЗ{% else %}Изменить ВУЗ с {{ uni_name }} на {% endif%} </label>
-        {{ uni_form.uni_name}}
-        <button type="submit">Submit</button>
-    </div>
-</form>
+    button[type="submit"] {
+        background-color: #fff;
+        color: #222;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
 
-<form method="post" style="background-color: #222; color: #fff;" action="{% url 'link-update' user.pk %}">
-    {% csrf_token %}
-    <div class="col-lg-6">
-        <label class="small mb-1" for="{{ link_form.socnet_link.id_for_label }}">{% if socnet is None %}Установить ссылку на аккаунт соц. сети для связи{% else %}Изменить ссылку на соц.сеть  с {{ socnet }} на {% endif%} </label>
-        {{ link_form.socnet_link  }}
-        <button type="submit">Submit</button>
-    </div>
-</form>
+    button[type="submit"]:hover {
+        background-color: #ddd;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        box-shadow: 0 0 5px #fff;
+    }
+
+    form div {
+        margin-bottom: 20px;
+    }
+</style>
+
+<div style="text-align:center;">
+    <form method="post" action="{% url 'login-update' user.pk %}">
+        {% csrf_token %}
+        <div class="col-lg-6">
+            <label class="small mb-1" for="{{ login_form.username.id_for_label }}">Изменить username с {{ username }} на </label>
+            {{ login_form.username }}
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <h2>Ваш рейтинг: {{ rating }}</h2>
+
+    <form method="post" action="{% url 'vuz-update' user.pk %}">
+        {% csrf_token %}
+        <div class="col-lg-6">
+            <label class="small mb-1" for="{{ uni_form.uni_name.id_for_label }}">{% if uni_name is None %}Установить ВУЗ{% else %}Изменить ВУЗ с {{ uni_name }} на {% endif%} </label>
+            {{ uni_form.uni_name}}
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <form method="post" action="{% url 'link-update' user.pk %}">
+        {% csrf_token %}
+        <div class="col-lg-6">
+            <label class="small mb-1" for="{{ link_form.socnet_link.id_for_label }}">{% if socnet is None %}Установить ссылку на аккаунт соц. сети для связи{% else %}Изменить ссылку на соц.сеть  с {{ socnet }} на {% endif%} </label>
+            {{ link_form.socnet_link  }}
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
 
 {% endblock%}
