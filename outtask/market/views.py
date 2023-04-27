@@ -6,9 +6,9 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.views.generic import ListView, TemplateView, FormView
-from market.forms import UniForm, OfferCreation
+from market.forms import OfferCreation
 from market.models import Offer, Order
-from users.models import Uni, User
+from users.models import Uni
 from django.db.models import Q
 from common.views import TitleMixin
 from market.forms import FilterForm
@@ -17,7 +17,7 @@ from market.forms import FilterForm
 class MarketListView(TitleMixin, ListView): # главный view страницы "рынок", который выводит всю информацию и таблицы
     template_name = 'market/market.html'
     title = 'Рынок'
-    paginate_by = 10
+    paginate_by = 5
 
     def get_queryset(self):
         offers = Offer.objects.all()

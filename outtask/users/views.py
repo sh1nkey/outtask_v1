@@ -1,6 +1,4 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core import paginator
-from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
