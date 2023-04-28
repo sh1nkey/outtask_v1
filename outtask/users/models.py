@@ -9,6 +9,9 @@ class Uni(models.Model):
     def __str__(self):
         return f'{self.uni_name}'
 
+    class Meta:
+        ordering = ['uni_name']
+
 
 class User(AbstractUser):
     is_verified_email = models.BooleanField(default=False)

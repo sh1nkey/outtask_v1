@@ -3,6 +3,7 @@
 /workspace.xml
 .idea
 __pycache__
-.env
+outtask/.env
 migrations
 venv/
+.pytest_cache/

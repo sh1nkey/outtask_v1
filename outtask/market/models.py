@@ -11,6 +11,10 @@ class Subject(models.Model):
     def __str__(self):
         return f'{self.subj_name}'
 
+    class Meta:
+        ordering = ['subj_name']
+
+
 class Offer(models.Model):
     subj = models.ForeignKey(Subject, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,8 +25,6 @@ class Offer(models.Model):
 
     class Meta:
         ordering = ['deadline']
-
-
 
 
 class Order(models.Model):
