@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     #myapps
     'users',
     'market',
-    'chat'
+
 ]
 
 MIDDLEWARE = [
@@ -110,6 +110,7 @@ WSGI_APPLICATION = 'outtask.wsgi.application'
 
 # Daphne
 ASGI_APPLICATION = "outtask.asgi.application"
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",

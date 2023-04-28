@@ -24,11 +24,10 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('chat/', include('chat.urls')),
     path('market/', include('market.urls')),
     path('users/', include('users.urls')),
 
 ]
-#
+
 if settings.DEBUG:
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')),)
