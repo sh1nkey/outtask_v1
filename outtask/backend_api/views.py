@@ -16,5 +16,7 @@ class MarketRestView(APIView):
                 "deadline" : output.deadline
             } for output in Offer.objects.all()
         ]
+
+        print(output)
         return Response(output)
 

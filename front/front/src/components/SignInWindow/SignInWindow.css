@@ -1,0 +1,41 @@
+.input-field {
+    display: block;
+    margin: 0 0 2px 0;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+    height: 60px;
+    box-sizing: border-box;
+    background-color: rgb(22, 22, 22);
+
+
+    margin: 10px auto;
+}
+
+.block-header {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 25px;
+    margin-top: 100px;
+}
+
+.submit-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+
+    box-sizing: border-box;
+}
+
+.input-field {
+    color: #ffffff;
+}
+
+.input-field:focus::placeholder {
+    color: transparent;
+}
