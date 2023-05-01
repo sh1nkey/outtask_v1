@@ -1,6 +1,10 @@
+from allauth.account.views import ConfirmEmailView
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, FormView, DeleteView
@@ -184,7 +188,4 @@ class NeutralView(FormView):
     def post(self, request, *args, **kwargs):
         self.model.objects.get(pk=self.kwargs.get('pk')).delete()
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
-
-
-
 

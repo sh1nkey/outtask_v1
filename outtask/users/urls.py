@@ -17,4 +17,5 @@ urlpatterns= [
     path("order_not_ready/<int:pk>/",  NotHereOrder.as_view(), name="not-ready"),
     path("order_like/<int:pk>/",  LikeView.as_view(), name="like"),
     path("order_neutral/<int:pk>/",  NeutralView.as_view(), name="neutral"),
+
 ]

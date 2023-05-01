@@ -25,7 +25,10 @@ env = environ.Env(
 
     VK_CLIENT_ID=(str),
     VK_SECRET_KEY=(str),
-    VK_KEY=(str)
+    VK_KEY=(str),
+
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str)
 
 
 )
@@ -173,8 +176,9 @@ LOGIN_REDIRECT_URL = '/'
 SITE_ID = 1
 
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
 SOCIALACCOUNT_PROVIDERS = {
     'vk': {
@@ -186,15 +190,15 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-if env('DEBUG'):
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'smtp.gmail.com'
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
-    EMAIL_HOST_USER = 'your_email@gmail.com'
-    EMAIL_HOST_PASSWORD = 'your_email_password'
+#
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER')
 
 
 # Internationalization

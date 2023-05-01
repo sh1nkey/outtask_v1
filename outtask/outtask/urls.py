@@ -21,11 +21,12 @@ from market.views import IndexView
 from outtask import settings
 
 urlpatterns = [
-    path('', IndexView.as_view(), name='index'),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('market/', include('market.urls')),
     path('users/', include('users.urls')),
+    path('', IndexView.as_view(), name='index'), # отдельные страницы
+
 ]
 
 if settings.DEBUG:
