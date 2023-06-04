@@ -1,0 +1,8 @@
+/shelf/
+/workspace.xml
+.idea
+__pycache__/
+outtask/.env
+migrations
+venv/
+.pytest_cache/

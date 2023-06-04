@@ -31,8 +31,6 @@ env = environ.Env(
 
     EMAIL_HOST_USER=(str),
     EMAIL_HOST_PASSWORD=(str)
-
-
 )
 
 
@@ -49,7 +47,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -203,7 +201,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-#
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.com'
@@ -230,10 +227,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/media/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
+
+
 
 
 # Default primary key field type

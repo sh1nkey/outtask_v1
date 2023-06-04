@@ -1,0 +1,56 @@
+version: '3.9'
+services:
+  db:
+    image: postgres
+    volumes:
+      - type: volume
+        source: pg_data
+        target: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+
+
+  django:
+    image: django-docker:0.0.1
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "gunicorn --bind 0.0.0.0:8000 outtask.wsgi"
+#    sh -c "gunicorn --bind 0.0.0.0:8000 outtask.wsgi"
+    volumes:
+      - type: bind
+        source: .
+        target: /outtask
+      - type: volume
+        source: static_data
+        target: /outtask/static
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    environment:
+    - DJANGO_SETTINGS_MODULE=outtask.settings
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    depends_on:
+      - django
+    ports:
+      - "80:80"
+
+
+volumes:
+  pg_data:
+  static_data:

@@ -1,3 +1,4 @@
+# Default ignored files
 /shelf/
 /workspace.xml
 .idea
@@ -6,3 +7,4 @@ outtask/.env
 migrations
 venv/
 .pytest_cache/
+data/
