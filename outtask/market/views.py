@@ -2,7 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.views.generic import ListView, TemplateView, FormView
@@ -12,6 +12,8 @@ from users.models import Uni
 from django.db.models import Q
 from common.views import TitleMixin
 from market.forms import FilterForm
+
+from outtask import settings
 
 
 class MarketListView(TitleMixin, ListView): # главный view страницы "рынок", который выводит всю информацию и таблицы
@@ -43,6 +45,7 @@ class MarketListView(TitleMixin, ListView): # главный view страниц
         context = super().get_context_data(**kwargs)
         context['offers'] = self.get_queryset()
         context['unis'] = Uni.objects.all()
+        context['MEDIA_URL'] = settings.MEDIA_URL
         context['form'] = FilterForm()
 
         paginator = Paginator(context['offers'], self.paginate_by) # отсюда в этой функции начинается логика пагинации
@@ -62,6 +65,12 @@ class MarketListView(TitleMixin, ListView): # главный view страниц
 class IndexView(TitleMixin, TemplateView):
     template_name = 'market/index.html'
     title = 'Главная страница'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['MEDIA_URL'] = settings.MEDIA_URL
+        print(settings.MEDIA_URL)
+        return context
 
 
 class OfferCreationView(TitleMixin, FormView):

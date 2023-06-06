@@ -52,7 +52,7 @@
          <div>
                           <form method="post" action="{% url 'deleteoffer' offer.pk %}">
                             {% csrf_token %}
-                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                              <button type="submit"><img src="{{ MEDIA_URL }}market/ubrat.png" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
                     </div>
       </td>
@@ -118,7 +118,7 @@
         <div>
                         <form method="post" action="{% url 'deleteorder' offer.pk %}">
                             {% csrf_token %}
-                              <button type="submit"><img src="{% static 'market/img/ubrat.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+                              <button type="submit"><img src="{{ MEDIA_URL }}market/ubrat.png" alt="Добавить заказ" width="20" height="20"></button>
                           </form>
                     </div>
       </td>
@@ -177,7 +177,7 @@
          <td>    <div>
                          <form method="post" action="{% url 'like' order.pk %}">
                             {% csrf_token %}
-                                <button type="submit"><img src="{% static 'users/img/like.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                                <button type="submit"><img src="{{ MEDIA_URL }}users/like.png" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
                      </div></td>
         {% endif %}
@@ -185,13 +185,13 @@
         <td> <div>
                            <form method="post" action="{% url 'give-order' order.pk %}">
                             {% csrf_token %}
-                               <button type="submit"><img src="{% static 'users/img/give.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                               <button type="submit"><img src="{{ MEDIA_URL }}users/give.png" alt="Добавить заказ" width="90" height="30"></button>
                           </form>
                         </div></td>
       <td> <div>
                          <form method="post" action="{% url 'refuse' order.pk %}">
                             {% csrf_token %}
-                                <button type="submit"><img src="{% static 'users/img/no.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                                <button type="submit"><img src="{{ MEDIA_URL }}users/no.png" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
                      </div></td>
       {% endif %}
@@ -199,13 +199,13 @@
       <td> <div>
                            <form method="post" action="{% url 'ready' order.pk %}">
                             {% csrf_token %}
-                               <button type="submit"><img src="{% static 'users/img/ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                               <button type="submit"><img src="{{ MEDIA_URL }}users/ready.png" alt="Добавить заказ" width="90" height="30"></button>
                           </form>
                         </div></td>
       <td> <div>
                          <form method="post" action="{% url 'not-ready' order.pk %}">
                             {% csrf_token %}
-                                <button type="submit"><img src="{% static 'users/img/not_ready.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                                <button type="submit"><img src="{{ MEDIA_URL }}users/not_ready.png" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
                      </div></td>
 
@@ -215,13 +215,13 @@
       <td>    <div>
                          <form method="post" action="{% url 'neutral' order.pk %}">
                             {% csrf_token %}
-                                <button type="submit"><img src="{% static 'users/img/neutral.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                                <button type="submit"><img src="{{ MEDIA_URL }}users/neutral.png" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
                      </div></td>
       <td> <div>
                          <form method="post" action="{% url 'not-ready' order.pk %}">
                             {% csrf_token %}
-                                <button type="submit"><img src="{% static 'users/img/dislike.png' %}" alt="Добавить заказ" width="90" height="30"></button>
+                                <button type="submit"><img src="{{ MEDIA_URL }}users/dislike.png" alt="Добавить заказ" width="90" height="30"></button>
                              </form>
                      </div></td>
          {% endif %}

@@ -6,17 +6,46 @@
     <head>
         <title>Мой сайт</title>
         <link rel="stylesheet" type="text/css" href="{% static 'market/css/market1.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
-    <form method="get" >
+    <form method="get">
         {{ form.as_p }}
-       <button type="submit" style="border: 1px solid black;">Фильтровать</button>
+        <button type="submit" style="border: 1px solid black;">Фильтровать</button>
     </form>
     {% if user.is_authenticated%}
         <a href="{% url 'createoffer' %}">Создать заказ</a>
     {% endif%}
-        <main>
+    <main>
     <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+            text-align: center;
+            width: 80%;
+        }
+
+        /* CSS-стили для мобильных устройств */
+        @media screen and (max-width: 600px) {
+            table {
+                width: 100%;
+            }
+
+            form, .pagination {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button[type="submit"], a[href="{% url 'createoffer' %}"] {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            /* убираем лишние колонки на маленьких экранах */
+            th:nth-child(3), th:nth-child(4), td:nth-child(3), td:nth-child(4) {
+                display: none;
+            }
+        }
   table {
     border-collapse: collapse;
     margin: 0 auto;
@@ -92,7 +121,7 @@
         {% if user.is_authenticated %}
         <form method="post" action="{% url 'addoffer' offer.pk %}">
           {% csrf_token %}
-          <button type="submit"><img src="{% static 'market/img/dobavit.png' %}" alt="Добавить заказ" width="20" height="20"></button>
+          <button type="submit"><img src="{{ MEDIA_URL }}market/dobavit.png" alt="Добавить заказ" width="20" height="20"></button>
         </form>
         {% endif %}
       </td>

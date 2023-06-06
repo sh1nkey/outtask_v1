@@ -19,6 +19,8 @@ from common.views import TitleMixin
 
 from users.forms import LinkChangeForm
 
+from outtask import settings
+
 
 class Profile(TitleMixin, TemplateView): # выводит профиль (и все нужные формы и данные)
     template_name = 'users/profile.html'
@@ -30,6 +32,7 @@ class Profile(TitleMixin, TemplateView): # выводит профиль (и в�
         context['username'] = self.request.user.username
         context['uni_form'] = UniUpdateForm
         context['uni_name'] = self.request.user.uni
+        context['MEDIA_URL'] = settings.MEDIA_URL
         context['rating'] = self.request.user.rating
         context['link_form'] = LinkChangeForm
         context['socnet'] = self.request.user.socnet_link
@@ -80,6 +83,7 @@ class PerCabView(TitleMixin, TemplateView): # выводит личный каб
         context = super().get_context_data(**kwargs)
         context['offers'] = UsersOffersListView.get_queryset(self)
         context['taken_offers'] = UsersOrdersListView.get_queryset(self)
+        context['MEDIA_URL'] = settings.MEDIA_URL
         context['taken_orders'] = TakersOrdersListView.get_queryset(self)
         return context
 
@@ -186,6 +190,7 @@ class NeutralView(FormView):
     success_url = reverse_lazy('personal_cabinet')
 
     def post(self, request, *args, **kwargs):
-        self.model.objects.get(pk=self.kwargs.get('pk')).delete()
+        working_order = self.model.objects.get(pk=self.kwargs.get('pk'))
+        working_order.offer.delete()
         return HttpResponseRedirect(reverse_lazy('personal_cabinet'))
 

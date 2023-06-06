@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <link rel="stylesheet" href="{% static 'market/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'market/css/style.css' %}" />
     <title>{{ title }}</title>
 </head>
 <body>
@@ -12,23 +12,27 @@
       <div class="header_content">
         <div class="container">
           <div class="header_logo">
-            <a href="{% url 'index' %}"><img src="{% static 'market/img/logo-small1.png' %}" alt="Logo" /> </a>
+            <a href="{% url 'index' %}"><img src="{{ MEDIA_URL }}market/logo-small1.png" alt="Logo" /></a>
           </div>
-           <div class="header_nav">
-                <a href="{% url 'markett' %}" class="nav_item"> Рынок </a>
-            </div>
-          {% if not user.is_authenticated%}
-            <div class="header_nav">
-                <a href="{% url 'account_login' %}" class="nav_item"> Вход </a>
-            </div>
           <div class="header_nav">
-            <a href="{% url 'account_signup' %}" class="nav_item"> Регистрация </a>
+            <a href="{% url 'markett' %}" class="nav_item">Рынок</a>
+          </div>
+          {% if not user.is_authenticated %}
+          <div class="header_nav">
+            <a href="{% url 'account_login' %}" class="nav_item">Вход</a>
+          </div>
+          <div class="header_nav">
+            <a href="{% url 'account_signup' %}" class="nav_item">Регистрация</a>
           </div>
           {% else %}
-          <a href="{% url 'profile' %}" class="nav_item"> Профиль </a>
-          <a href="{% url 'personal_cabinet' %}" class="nav_item"> Мой кабинет </a>
-           <div class="header_nav">
-            <a href="{% url 'account_logout' %}" class="nav_item"> Выйти </a>
+          <div class="header_nav">
+            <a href="{% url 'profile' %}" class="nav_item">Профиль</a>
+          </div>
+          <div class="header_nav">
+            <a href="{% url 'personal_cabinet' %}" class="nav_item">Мой кабинет</a>
+          </div>
+          <div class="header_nav">
+            <a href="{% url 'account_logout' %}" class="nav_item">Выйти</a>
           </div>
           {% endif %}
         </div>
