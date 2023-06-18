@@ -8,3 +8,4 @@ migrations
 venv/
 .pytest_cache/
 data/
+asd.py
