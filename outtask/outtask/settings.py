@@ -192,6 +192,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 2
 
+
 SOCIALACCOUNT_PROVIDERS = {
     'vk': {
         'APP': {
@@ -228,13 +229,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 
 

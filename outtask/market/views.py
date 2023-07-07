@@ -2,7 +2,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.timezone import now
 from django.views.generic import ListView, TemplateView, FormView
