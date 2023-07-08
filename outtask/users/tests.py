@@ -44,26 +44,37 @@ class RegistrationLoginTest(TestCase):
 
 
 class DealMakeTest(TestCase):
+    def setUp(self):
+        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com',
+                                                 password='testpassword')
+        self.subj = Subject.objects.create(subj_name='матан')
+        self.offer = Offer.objects.create(subj=self.subj, user=self.customer)
+        self.order = Order.objects.create(user=self.customer, offer=self.offer)
 
     def test_give_order(self):
-        customer = User.objects.create_user(username='customer', email='testuser1@example.com', password='testpassword')
-        subj = Subject.objects.create(subj_name='матан')
-        offer = Offer.objects.create(subj=subj, user=customer)
-        order = Order.objects.create(user=customer, offer=offer)
-
-        data = {'pk': order.id}
+        data = {'pk': self.order.id}
         url = reverse('give-order', kwargs=data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        order.refresh_from_db()
-        self.assertTrue(order.status)
-
-
+        self.order.refresh_from_db()
+        self.assertTrue(self.order.status)
 
 
     def test_refuse(self):
-        pass
+        data = {'pk': self.order.id}
+        url = reverse('refuse', kwargs=data)
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        try:
+            self.order.refresh_from_db()
+            _ = 0
+        except:
+            _ = 1
+
+        self.assertTrue(_)
+
 
     def test_not_came(self):
         pass
