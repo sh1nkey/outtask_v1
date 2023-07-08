@@ -1,10 +1,7 @@
-from allauth.account.views import ConfirmEmailView
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
+
 
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import UpdateView, FormView, DeleteView
@@ -130,7 +127,7 @@ class GiveOrder(SuccessMessageMixin, FormView): # отдать заказ исп
 
     def post(self, request, *args, **kwargs):
         change_status = self.model.objects.get(pk=self.kwargs.get('pk'))
-        offer_of_order = change_status.offer.pk
+        offer_of_order = change_status.offer.pk # определяет изначлальный заказ, чтоб потом неодобренные предложения удалить
         if change_status.status == 0:
             change_status.status = 1
             change_status.save()

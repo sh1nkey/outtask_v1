@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 .idea
-__pycache__
+__pycache__/
 outtask/.env
 migrations
 venv/
