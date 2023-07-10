@@ -45,13 +45,23 @@ class RegistrationLoginTest(TestCase):
 
 class DealMakeTest(TestCase):
     def setUp(self):
-        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com',
-                                                 password='testpassword')
+        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com', password='testpassword')
+        self.worker = User.objects.create_user(username='worker', email='testuser2@example.com', password='testpassword')
         self.subj = Subject.objects.create(subj_name='матан')
         self.offer = Offer.objects.create(subj=self.subj, user=self.customer)
-        self.order = Order.objects.create(user=self.customer, offer=self.offer)
+        self.order = Order.objects.create(user=self.worker, offer=self.offer)
 
         self.data = {'pk': self.order.id}
+
+
+    def check_deleted_element(self, element):
+        try:
+            element.refresh_from_db()
+            _ = 0
+        except:
+            _ = 1
+
+        return _
 
     def test_give_order(self):
         url = reverse('give-order', kwargs=self.data)
@@ -62,26 +72,22 @@ class DealMakeTest(TestCase):
         self.assertTrue(self.order.status)
 
 
+
+
     def test_refuse(self):
         url = reverse('refuse', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        try:
-            self.order.refresh_from_db()
-            _ = 0
-        except:
-            _ = 1
-
-        self.assertTrue(_)
+        self.assertTrue(self.check_deleted_element(self.order))
 
 
     def test_not_came(self):
         url = reverse('not-ready', kwargs=self.data)
-        rating_before = self.customer.rating
+        rating_before = self.worker.rating
         response = self.client.post(url)
-        self.customer.refresh_from_db()
-        rating_after = self.customer.rating
+        self.worker.refresh_from_db()
+        rating_after = self.worker.rating
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(rating_before - 1, rating_after)
@@ -92,7 +98,7 @@ class DealMakeTest(TestCase):
         except:
             _ = 1
 
-        self.assertTrue(_)
+        self.assertTrue(self.check_deleted_element(self.offer))
 
 
     def test_came(self):
@@ -101,8 +107,6 @@ class DealMakeTest(TestCase):
         url = reverse('ready', kwargs=self.data)
         response = self.client.post(url)
 
-
-
         self.assertEqual(response.status_code, 302)
         self.order.refresh_from_db()
         self.assertEqual(self.order.status, 2)
@@ -110,6 +114,16 @@ class DealMakeTest(TestCase):
 
     def test_like(self):
         pass
+        rating_old = self.worker.rating
+        url = reverse('like', kwargs=self.data)
+        response = self.client.post(url)
+        self.worker.refresh_from_db()
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(rating_old, self.worker.rating - 1)
+        self.assertTrue(self.check_deleted_element(self.offer))
+
+
 
     def test_neutral(self):
         pass
