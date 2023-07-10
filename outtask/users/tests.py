@@ -5,15 +5,14 @@ from users.models import User
 from market.models import Order, Offer, Subject
 
 
-
 class RegistrationLoginTest(TestCase):
 
     def test_register(self):
         data = {
-            'username' : 'abobus',
-            'email' : 'soccor@bk.ru',
-            'password1' : 'testpassword',
-            'password2' : 'testpassword',
+            'username': 'abobus',
+            'email': 'soccor@bk.ru',
+            'password1': 'testpassword',
+            'password2': 'testpassword',
         }
 
         url = reverse('account_signup')
@@ -36,32 +35,43 @@ class RegistrationLoginTest(TestCase):
         url = reverse('account_login')
         response = self.client.post(url, data)
 
-
         self.assertEqual(response.status_code, 302)
 
         user = User.objects.get(username='abobus')
         self.assertTrue(user.is_authenticated)
 
 
+'''Dang next testing class is kinda long, but actually:
+
+table element deletion 4/6 (optimized)
+comparing rating 2/6
+changing status 2/6
+
+i think it's useless to make those tests shorter in volume
+'''
+
+
+def check_deleted_element(element):
+    try:
+        element.refresh_from_db()
+        _ = 0
+    except:
+        _ = 1
+
+    return _
+
 class DealMakeTest(TestCase):
     def setUp(self):
-        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com', password='testpassword')
-        self.worker = User.objects.create_user(username='worker', email='testuser2@example.com', password='testpassword')
+        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com',
+                                                 password='testpassword')
+        self.worker = User.objects.create_user(username='worker', email='testuser2@example.com',
+                                               password='testpassword')
         self.subj = Subject.objects.create(subj_name='матан')
         self.offer = Offer.objects.create(subj=self.subj, user=self.customer)
         self.order = Order.objects.create(user=self.worker, offer=self.offer)
 
         self.data = {'pk': self.order.id}
 
-
-    def check_deleted_element(self, element):
-        try:
-            element.refresh_from_db()
-            _ = 0
-        except:
-            _ = 1
-
-        return _
 
     def test_give_order(self):
         url = reverse('give-order', kwargs=self.data)
@@ -76,8 +86,7 @@ class DealMakeTest(TestCase):
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(self.check_deleted_element(self.order))
-
+        self.assertTrue(check_deleted_element(self.order))
 
     def test_not_came(self):
         url = reverse('not-ready', kwargs=self.data)
@@ -86,16 +95,9 @@ class DealMakeTest(TestCase):
         self.worker.refresh_from_db()
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(rating_before - 1,self.worker.rating)
+        self.assertEqual(rating_before - 1, self.worker.rating)
 
-        try:
-            self.offer.refresh_from_db()
-            _ = 0
-        except:
-            _ = 1
-
-        self.assertTrue(self.check_deleted_element(self.offer))
-
+        self.assertTrue(check_deleted_element(self.offer))
 
     def test_came(self):
         self.order.status = 1
@@ -115,14 +117,36 @@ class DealMakeTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(rating_old, self.worker.rating - 1)
-        self.assertTrue(self.check_deleted_element(self.offer))
+        self.assertTrue(check_deleted_element(self.offer))
 
     def test_neutral(self):
         url = reverse('neutral', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(self.check_deleted_element(self.offer))
+        self.assertTrue(check_deleted_element(self.offer))
 
-    def test_dislike(self):
-        pass
+
+
+class DeleteTest(TestCase):
+    def setUp(self):
+        self.customer = User.objects.create_user(username='customer', email='testuser1@example.com',
+                                                 password='testpassword')
+        self.worker = User.objects.create_user(username='worker', email='testuser2@example.com',
+                                               password='testpassword')
+        self.subj = Subject.objects.create(subj_name='матан')
+        self.offer = Offer.objects.create(subj=self.subj, user=self.customer)
+        self.order = Order.objects.create(user=self.worker, offer=self.offer)
+
+
+    def test_offer_delete(self):
+        url = reverse('deleteoffer', kwargs={'pk' : self.offer.id})
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(check_deleted_element(self.offer))
+
+'''
+удалить предложение
+'''
+
