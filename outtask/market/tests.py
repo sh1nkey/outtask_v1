@@ -15,12 +15,6 @@ class MarketTest(TestCase):
         self.subj = Subject.objects.create(subj_name='матан')
 
     def test_offer_create(self):
-
-        # пишем текст в формы
-        # отправляем его
-        # проверяем, создалось ли предложение
-
-
         self.client.login(username='customer', password='testpassword')
 
         data = {
@@ -38,11 +32,16 @@ class MarketTest(TestCase):
         self.assertTrue(len(Offer.objects.all()))
 
 
+    def test_take_order(self):
+        self.client.login(username='customer', password='testpassword')
+
+        offer = Offer.objects.create(subj=self.subj, user=self.customer, task='lmao test', price=1, deadline=timezone.localdate())
+        data = {'pk' : offer.id}
+
+        url = reverse('addoffer', kwargs=data)
+        response = self.client.post(url, data=data)
 
 
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(len(Order.objects.all()))
 
-
-'''
-создать заказ
-взять заказ
-'''
