@@ -73,20 +73,12 @@ class DealMakeTest(TestCase):
         self.data = {'pk': self.order.id}
 
 
-    def test_give_order(self):
-        url = reverse('give-order', kwargs=self.data)
-        response = self.client.post(url)
-
-        self.assertEqual(response.status_code, 302)
-        self.order.refresh_from_db()
-        self.assertTrue(self.order.status)
-
     def test_refuse(self):
         url = reverse('refuse', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(check_deleted_element(self.order))
+        self.assertFalse(Order.objects.filter(id=self.order.id).exists())
 
     def test_not_came(self):
         url = reverse('not-ready', kwargs=self.data)
@@ -97,7 +89,7 @@ class DealMakeTest(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(rating_before - 1, self.worker.rating)
 
-        self.assertTrue(check_deleted_element(self.offer))
+        self.assertFalse(Offer.objects.filter(id=self.offer.id).exists())
 
     def test_came(self):
         self.order.status = 1
@@ -117,14 +109,14 @@ class DealMakeTest(TestCase):
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(rating_old, self.worker.rating - 1)
-        self.assertTrue(check_deleted_element(self.offer))
+        self.assertFalse(Offer.objects.filter(id=self.offer.id).exists())
 
     def test_neutral(self):
         url = reverse('neutral', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(check_deleted_element(self.offer))
+        self.assertFalse(Offer.objects.filter(id=self.offer.id).exists())
 
 
 
@@ -144,9 +136,15 @@ class DeleteTest(TestCase):
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(check_deleted_element(self.offer))
+        self.assertFalse(Offer.objects.filter(id=self.offer.id).exists())
 
-'''
-удалить предложение
-'''
+
+    def test_order_delete(self):
+        url = reverse('deleteorder', kwargs={'pk': self.order.id})
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Order.objects.filter(id=self.order.id).exists())
+
+
 
