@@ -96,7 +96,17 @@ class DealMakeTest(TestCase):
 
 
     def test_came(self):
-        pass
+        self.order.status = 1
+        self.order.save()
+        url = reverse('ready', kwargs=self.data)
+        response = self.client.post(url)
+
+
+
+        self.assertEqual(response.status_code, 302)
+        self.order.refresh_from_db()
+        self.assertEqual(self.order.status, 2)
+
 
     def test_like(self):
         pass
