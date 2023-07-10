@@ -71,9 +71,6 @@ class DealMakeTest(TestCase):
         self.order.refresh_from_db()
         self.assertTrue(self.order.status)
 
-
-
-
     def test_refuse(self):
         url = reverse('refuse', kwargs=self.data)
         response = self.client.post(url)
@@ -87,10 +84,9 @@ class DealMakeTest(TestCase):
         rating_before = self.worker.rating
         response = self.client.post(url)
         self.worker.refresh_from_db()
-        rating_after = self.worker.rating
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(rating_before - 1, rating_after)
+        self.assertEqual(rating_before - 1,self.worker.rating)
 
         try:
             self.offer.refresh_from_db()
@@ -111,9 +107,7 @@ class DealMakeTest(TestCase):
         self.order.refresh_from_db()
         self.assertEqual(self.order.status, 2)
 
-
     def test_like(self):
-        pass
         rating_old = self.worker.rating
         url = reverse('like', kwargs=self.data)
         response = self.client.post(url)
@@ -123,10 +117,12 @@ class DealMakeTest(TestCase):
         self.assertEqual(rating_old, self.worker.rating - 1)
         self.assertTrue(self.check_deleted_element(self.offer))
 
-
-
     def test_neutral(self):
-        pass
+        url = reverse('neutral', kwargs=self.data)
+        response = self.client.post(url)
+
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(self.check_deleted_element(self.offer))
 
     def test_dislike(self):
         pass
