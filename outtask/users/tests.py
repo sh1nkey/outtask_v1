@@ -51,9 +51,10 @@ class DealMakeTest(TestCase):
         self.offer = Offer.objects.create(subj=self.subj, user=self.customer)
         self.order = Order.objects.create(user=self.customer, offer=self.offer)
 
+        self.data = {'pk': self.order.id}
+
     def test_give_order(self):
-        data = {'pk': self.order.id}
-        url = reverse('give-order', kwargs=data)
+        url = reverse('give-order', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
@@ -62,8 +63,7 @@ class DealMakeTest(TestCase):
 
 
     def test_refuse(self):
-        data = {'pk': self.order.id}
-        url = reverse('refuse', kwargs=data)
+        url = reverse('refuse', kwargs=self.data)
         response = self.client.post(url)
 
         self.assertEqual(response.status_code, 302)
@@ -77,7 +77,23 @@ class DealMakeTest(TestCase):
 
 
     def test_not_came(self):
-        pass
+        url = reverse('not-ready', kwargs=self.data)
+        rating_before = self.customer.rating
+        response = self.client.post(url)
+        self.customer.refresh_from_db()
+        rating_after = self.customer.rating
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(rating_before - 1, rating_after)
+
+        try:
+            self.offer.refresh_from_db()
+            _ = 0
+        except:
+            _ = 1
+
+        self.assertTrue(_)
+
 
     def test_came(self):
         pass
