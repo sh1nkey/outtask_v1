@@ -2,6 +2,6 @@
 {% load account %}
 {% load i18n %}
 
-{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Вы получили это сообщение, потому что {{ user_display }} хочет подтвердить свой аккаунт на {{ site_domain }}.
+{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Вы получили это сообщение, потому что {{ user_display }} хочет подтвердить свой аккаунт на outtask.ru.
 
 Чтобы подтвердить аккаунт, тыкнете по ссылке {{ activate_url }}{% endblocktrans %}{% endautoescape %}{% endblock %}
