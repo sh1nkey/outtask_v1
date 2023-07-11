@@ -127,7 +127,7 @@ class GiveOrder(SuccessMessageMixin, FormView): # отдать заказ исп
 
     def post(self, request, *args, **kwargs):
         change_status = self.model.objects.get(pk=self.kwargs.get('pk'))
-        offer_of_order = change_status.offer.pk # определяет изначлальный заказ, чтоб потом неодобренные предложения удалить
+        offer_of_order = change_status.offer.pk # определяет изначальный заказ, чтоб потом неодобренные предложения удалить
         if change_status.status == 0:
             change_status.status = 1
             change_status.save()

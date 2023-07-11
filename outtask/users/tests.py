@@ -1,8 +1,16 @@
-# Create your tests here.
 from django.test import TestCase
 from django.urls import reverse
 from users.models import User
 from market.models import Order, Offer, Subject
+
+'''
+Please launch tests individually, like that:
+
+python manage.py test users
+python manage.py test market
+
+otherwise strange bug will appear and tests won't work
+'''
 
 
 class RegistrationLoginTest(TestCase):
@@ -50,15 +58,6 @@ changing status 2/6
 i think it's useless to make those tests shorter in volume
 '''
 
-
-def check_deleted_element(element):
-    try:
-        element.refresh_from_db()
-        _ = 0
-    except:
-        _ = 1
-
-    return _
 
 class DealMakeTest(TestCase):
     def setUp(self):

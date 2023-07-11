@@ -14,6 +14,11 @@ import os
 import environ
 from pathlib import Path
 
+
+'''
+Here is all data you need to put in your .env for this programm to start working!
+'''
+
 env = environ.Env(
     DEBUG=(bool),
     DOCKER=(bool),

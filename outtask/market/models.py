@@ -15,6 +15,9 @@ class Subject(models.Model):
         ordering = ['subj_name']
 
 
+'''
+Offer =  an thing that a person (customer) leaves on the market to be fulfilled 
+'''
 class Offer(models.Model):
     subj = models.ForeignKey(Subject, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -26,6 +29,10 @@ class Offer(models.Model):
     class Meta:
         ordering = ['deadline']
 
+
+'''
+Order = suggestions from the worker to work on customer's thing
+'''
 
 class Order(models.Model):
     NOT_TAKEN = 0

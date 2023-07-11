@@ -25,7 +25,7 @@ class MarketTest(TestCase):
         }
 
         self.assertFalse(len(Offer.objects.all()))
-        url = reverse('createoffer')
+        url = reverse('createoffer') # which url is being tested
         response = self.client.post(url,  data=data)
 
         self.assertEqual(response.status_code, 302)
