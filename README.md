@@ -1,9 +1,21 @@
-## TL:DR
+<p align="center">
+  <img src="https://github.com/sh1nkey/outtask/assets/110509023/749d8332-95d4-438c-ab37-f6d3e35fd127" alt="logo">
+</p>
+
+<h1 align="center">Outtask</h1>
+
+
+<p align="center">
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/sh1nkey/outtask">
+</p>
+
+
+##  :speech_balloon: TL:DR 
 
 Учебный пэт-проект, биржа рефератов/контрольных/всего-всего для студентов, на Django. Это сайт, который позволяет одним оставить заявку для исполнения какой-либо ВУЗовской работы, а другим принять 
 эти заявки и немного подзаработать.
 
-## Видео-описание
+## :camera: Видео-описание
 
 https://www.youtube.com/watch?v=l9SjayfaFro&t=6s
 
